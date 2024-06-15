@@ -239,20 +239,21 @@ outline: none;
     }
     .counter-wrapper {
       position: relative;
-      span {
+      .counter{
         font-weight: 500;
         position: absolute;
-        font-size: 11px;
-        width: 16px;
-        height: 16px;
+        font-size: 10px !important;
         color: #fff;
         border-radius: 50%;
         background-color: #282828;
+display: flex;
+
         text-align: center;
         align-items: center;
         justify-content: center;
-        bottom: 0;
-        left: 10px;
+width: 18px;        bottom: -10px;
+
+        left: 5px;
       }
     }
 
@@ -317,5 +318,87 @@ font-size: 20px;
   .hdr-bottom__right i{
     font-size: 20px;
   }
+  
 }
 
+.sidebar-owerlay{
+  height: 100%;
+  width: 100%;
+  background-color :rgba(0, 0, 0, 0.374);
+  position: fixed;
+  z-index: 104;
+  top: 0;
+  left: 0;
+  transition: 0.3s;
+
+}
+.sidebar-content{
+  position: fixed;
+  top: 0;
+  left: -300px;
+  background-color: #fff;
+  width: 300px;
+  height: 100%;
+  z-index: 105;
+  padding: 20px ;
+transition: 0.5s;
+ .close-btn{
+    font-size: 17px;
+    font-weight: 700;
+    position: -webkit-sticky;
+    position: sticky;
+    z-index: 2;
+    top: 0;
+    margin: 0 -15px 10px;
+    padding: 20px 15px;
+    cursor: pointer;
+    text-align: left;
+    text-decoration: none;
+    color: #282828;
+    background-color: #fff;
+transition: 0.5s !important;
+    &:hover{
+      text-decoration: underline !important;
+
+    }
+  }
+  li{
+    padding: 5px 0;
+  }
+}
+
+.sidebar-close{
+  left: 0;
+}
+.cardbar{
+  position: fixed;
+  top: 0;right: 0;
+  height: 100%;
+  z-index: 107;
+  background-color: #fff;
+  transition: 0.5s;
+}
+ 
+
+.cardbar-close{
+  right: -500px;
+}
+
+.icon-shopping-bag{
+font-size: 100px !important;
+}
+
+.quicklogin-wrapper{
+  position: fixed;
+  top: 0;right: 0;
+  background-color: #fff;
+  height: 100%;
+  width: 320px;
+  padding: 20px;
+  transition: 0.5s;
+  z-index: 105;
+}
+
+.account-close{
+right: -500px;
+}

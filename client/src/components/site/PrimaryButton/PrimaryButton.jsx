@@ -1,8 +1,10 @@
 import React from 'react'
 import styled from 'styled-components';
 
+import {Link} from "react-router-dom"
 
-const StyledButton = styled.button`
+
+const PrimaryButton = styled.a`
   background-color: #17c6aa;
   color: white;
   font-family: 'Open Sans', sans-serif;
@@ -31,13 +33,5 @@ const StyledButton = styled.button`
 `;
 
 
-const PrimaryButton = (props) => {
-
-  return (
-    <>
-    <StyledButton>{props.children}</StyledButton>
-  </>
-  )
-}
 
 export default PrimaryButton
