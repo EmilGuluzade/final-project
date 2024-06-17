@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -10,7 +10,6 @@ import MainContext from "../../../context/context";
 const Login = () => {
   const { login } = useContext(MainContext);
   const navigate = useNavigate("");
-
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -26,17 +25,15 @@ const Login = () => {
 
         if (validUser) {
           actions.resetForm();
-          login(validUser);
-          Swal.fire({
+            login(validUser);
+            Swal.fire({
             position: "top-end",
             icon: "success",
             title: "Signed in successfully",
             showConfirmButton: false,
             timer: 1000,
-          }).then(() => {
-            e.preventDefault()
-            navigate("/");
-          });
+          })
+          navigate("/");
         } else {
           Swal.fire({
             position: "top-end",

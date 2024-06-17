@@ -119,7 +119,10 @@ const [count,setCount]=useState(0)
                         Gallery
                       </Link>
                     </li>
-                    <li>
+
+                    {
+                      user.id && <>
+                         <li>
                       <Link onClick={() => setIsOpen(false)} to="/login">
                         Account
                       </Link>
@@ -139,6 +142,9 @@ const [count,setCount]=useState(0)
                         Wishlist
                       </Link>
                     </li>
+                      </>
+                    }
+                   
                     <li>
                       <Link onClick={() => setIsOpen(false)} to="/faq">
                         FAQ
@@ -258,7 +264,8 @@ const [count,setCount]=useState(0)
                 Gallery
               </Link>
             </li>
-            <li>
+            {user.id && <>
+              <li>
               <Link onClick={() => setIsSidebar(false)} to="/login">
                 Account
               </Link>
@@ -278,6 +285,7 @@ const [count,setCount]=useState(0)
                 Wishlist
               </Link>
             </li>
+            </>}
             <li>
               <Link onClick={() => setIsSidebar(false)} to="/faq">
                 FAQ

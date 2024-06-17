@@ -26,15 +26,15 @@ const QuickLogin = ({ isOpen, setIsOpen }) => {
       if (validUser) {
         actions.resetForm();
         login(validUser);
-        Swal.fire({
+     await  Swal.fire({
           position: "top-end",
           icon: "success",
           title: "Signed up successfully",
           showConfirmButton: false,
           timer: 1000,
-        }).then(() => {
+        })
           navigate("/");
-        });
+       
       } else {
         Swal.fire({
           position: "top-end",

@@ -40,7 +40,7 @@ const Register = () => {
           showConfirmButton: false,
           timer: 1000,
         }).then(() => {
-          navigate("/login"); // Navigate to login page on successful registration
+          navigate("/login"); 
         });
       }
     }
