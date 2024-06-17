@@ -1,57 +1,95 @@
-import React, { useState } from 'react';
+import React from "react";
+import { useFormik } from "formik";
+import { Link, useNavigate } from "react-router-dom";
+import User from "../../../classes/User";
+import userValidation from "../../../validations/user.validation";
+import Swal from "sweetalert2";
+import { endpoints } from "../../../services/api/constants";
+import controller from "../../../services/api/requests";
 
 const Register = () => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [agreeTerms, setAgreeTerms] = useState(true);
+  const navigate = useNavigate("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Add form submission logic here
-    console.log({
-      firstName,
-      lastName,
-      email,
-      password,
-      confirmPassword,
-      agreeTerms
-    });
-  };
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      src: "",
+    },
+    validationSchema: userValidation,
+    onSubmit: async ({ username, email, password, src }, actions) => {
+      const newUser = new User(username, email, password, src);
+      const response = await controller.post(endpoints.users, newUser);
+      actions.resetForm();
+    
+      if (response.error) {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: response.message,
+          showConfirmButton: false,
+          timer: 1000,
+        });
+      } else {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Signed up successfully",
+          showConfirmButton: false,
+          timer: 1000,
+        }).then(() => {
+          navigate("/login"); // Navigate to login page on successful registration
+        });
+      }
+    }
+  });
 
   return (
-    <div className="page-content" style={{ minHeight: '1.8px' }}>
+    <div className="page-content" style={{ minHeight: "1.8px" }}>
       <div className="holder">
         <div className="container">
           <div className="row justify-content-center">
-            <div className="col-md-18 col-lg-12">
+            <div className="col-md-18 col-lg-6">
               <h2 className="text-center">Create an Account</h2>
               <div className="form-wrapper">
-                <p>To access your wishlist, address book and contact preferences and to take advantage of our speedy checkout, create an account with us now.</p>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={formik.handleSubmit}>
                   <div className="row">
-                    <div className="col-sm-9">
+                    <div className="">
                       <div className="form-group">
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="First name"
-                          value={firstName}
-                          onChange={(e) => setFirstName(e.target.value)}
+                          placeholder="User name"
+                          name="username"
+                          value={formik.values.username}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
                         />
+                        {formik.touched.username && formik.errors.username && (
+                          <small style={{ color: "red" }}>
+                            {formik.errors.username}
+                          </small>
+                        )}
                       </div>
                     </div>
-                    <div className="col-sm-9">
+                    <div className="">
                       <div className="form-group">
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="Last name"
-                          value={lastName}
-                          onChange={(e) => setLastName(e.target.value)}
+                          placeholder="Image url"
+                          name="src"
+                          value={formik.values.src}
+                          onChange={formik.handleChange}
+                          onBlur={formik.handleBlur}
                         />
+                        {formik.touched.src && formik.errors.src && (
+                          <small style={{ color: "red" }}>
+                            {formik.errors.src}
+                          </small>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -60,42 +98,57 @@ const Register = () => {
                       type="text"
                       className="form-control"
                       placeholder="E-mail"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      name="email"
+                      value={formik.values.email}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
                     />
+                    {formik.touched.email && formik.errors.email && (
+                      <small style={{ color: "red" }}>
+                        {formik.errors.email}
+                      </small>
+                    )}
                   </div>
                   <div className="form-group">
                     <input
                       type="password"
                       className="form-control"
                       placeholder="Password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
+                      name="password"
+                      value={formik.values.password}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
                     />
+                    {formik.touched.password && formik.errors.password && (
+                      <small style={{ color: "red" }}>
+                        {formik.errors.password}
+                      </small>
+                    )}
                   </div>
                   <div className="form-group">
                     <input
                       type="password"
                       className="form-control"
                       placeholder="Confirm Password"
-                      value={confirmPassword}
-                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      name="confirmPassword"
+                      value={formik.values.confirmPassword}
+                      onChange={formik.handleChange}
+                      onBlur={formik.handleBlur}
                     />
+                    {formik.touched.confirmPassword &&
+                      formik.errors.confirmPassword && (
+                        <small style={{ color: "red" }}>
+                          {formik.errors.confirmPassword}
+                        </small>
+                      )}
                   </div>
-                  <div className="clearfix">
-                    <input
-                      id="checkbox1"
-                      name="checkbox1"
-                      type="checkbox"
-                      checked={agreeTerms}
-                      onChange={(e) => setAgreeTerms(e.target.checked)}
-                    />
-                    <label htmlFor="checkbox1">
-                      By registering your details you agree to our <a href="#" className="custom-color" data-fancybox="" data-src="#modalTerms">Terms and Conditions</a> and <a href="#" className="custom-color" data-fancybox="" data-src="#modalCookies">Cookie Policy</a>
-                    </label>
-                  </div>
+                  <Link to="/login">Already have an account?</Link>
                   <div className="text-center">
-                    <button className="btn" type="submit">Create an Account</button>
+                    <input
+                      className="btn"
+                      type="submit"
+                      value={"Create Account"}
+                    />
                   </div>
                 </form>
               </div>

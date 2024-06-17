@@ -1,4 +1,4 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { RouterProvider, createBrowserRouter, json } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { HelmetProvider } from "react-helmet-async";
@@ -7,11 +7,15 @@ import ROUTES from "./routes/routes";
 import "bootstrap/dist/css/bootstrap.css";
 import MainContext from "./context/context";
 import { MAIN_URL } from "./config/config";
+import Swal from "sweetalert2";
+import controller from "./services/api/requests";
+import { endpoints } from "./services/api/constants";
 function App() {
-  const [error, setError] = useState(false)
-  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const router = createBrowserRouter(ROUTES);
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const [basket, setBasket] = useState(
     localStorage.getItem("basket")
       ? JSON.parse(localStorage.getItem("basket"))
@@ -29,9 +33,17 @@ function App() {
   }, [basket, wishlist]);
 
   useEffect(() => {
-    axios.get(MAIN_URL).then((res) => {
-      setData([...res.data]);
-    });
+    if (!localStorage.getItem("user")) {
+      localStorage.setItem(
+        "user",
+        JSON.stringify({
+          id: null,
+          role: "",
+          wishlist: [],
+          basket: [],
+        })
+      );
+    }
   }, []);
 
   function addToBasket(id) {
@@ -77,6 +89,43 @@ function App() {
     }
   }
 
+  function login(user) {
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        role: user.role,
+        id: user._id,
+        wishlist: user.wishlist,
+        basket: user.basket,
+      })
+    );
+
+    setUser(JSON.parse(localStorage.getItem("user")));
+
+
+  }
+  function logout() {
+    localStorage.setItem(
+      "user",
+      JSON.stringify({
+        id: null,
+        role: "",
+        wishlist: null,
+        basket: null,
+      })
+    );
+    setUser(JSON.parse(localStorage.getItem("user")));
+
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Signed out successfully",
+      showConfirmButton: false,
+      timer: 1000,
+    })
+    
+  }
+
   const contextData = {
     data,
     setData,
@@ -89,7 +138,11 @@ function App() {
     error,
     setError,
     loading,
-    setLoading
+    setLoading,
+    login,
+    logout,
+    user,
+    setUser,
   };
   return (
     <MainContext.Provider value={contextData}>

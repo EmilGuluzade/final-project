@@ -1,14 +1,17 @@
+import Error from "../pages/Error/Error";
 import AdminRoot from "../pages/admin/AdminRoot";
 import DashBoard from "../pages/admin/DashBoard/DashBoard";
 import About from "../pages/site/About/About";
 import Basket from "../pages/site/Basket/Basket";
 import Blog from "../pages/site/Blog/Blog";
+import BlogDetail from "../pages/site/BlogDetail/BlogDetail";
 import Category from "../pages/site/Category/Category";
 import Checkout from "../pages/site/Checkout/Checkout";
 import FAQ from "../pages/site/FAQ/FAQ";
 import Gallery from "../pages/site/Gallery/Gallery";
 import Home from "../pages/site/Home/Home";
 import Login from "../pages/site/Login/Login";
+import ProductDetail from "../pages/site/ProductDetail/ProductDetail";
 import Register from "../pages/site/Register/Register";
 import SiteRoot from "../pages/site/SiteRoot";
 
@@ -22,25 +25,32 @@ const ROUTES = [
         element: <Home />,
       },
       {
-        path: "about",
+        path: "/about",
         element: <About />,
       },
       ,
       {
-        path: "faq",
+        path: "/faq",
         element: <FAQ />,
       },
       {
-        path: "category",
+        path: "/category",
         element: <Category />,
       },
       {
-        path: "gallery",
+        path: "/gallery",
         element: <Gallery />,
       },
       {
         path: "/blog",
         element: <Blog></Blog>,
+      },
+      {
+        path: "/blog/:id",
+        element: <BlogDetail></BlogDetail>,
+      },{
+        path: "/product/:id",
+        element: <ProductDetail></ProductDetail>,
       },
       {
         path: "/basket",
@@ -58,6 +68,9 @@ const ROUTES = [
       {
         path: "/register",
         element: <Register></Register>,
+      }, {
+        path: "*",
+        element: <Error></Error>,
       },
     ],
   },
@@ -69,6 +82,9 @@ const ROUTES = [
       {
         path: "",
         element: <DashBoard />,
+      },{
+        path: "*",
+        element: <Error></Error>,
       },
     ],
   },

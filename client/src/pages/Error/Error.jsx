@@ -3,7 +3,7 @@ import "./Error.scss"
 const Error = () => {
   return (
     <div>
-      
+      error
     </div>
   )
 }
