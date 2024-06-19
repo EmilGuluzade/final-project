@@ -6,7 +6,7 @@ import { endpoints } from "../../../services/api/constants";
 import controller from "../../../services/api/requests";
 import loginValidation from "../../../validations/login.validation";
 import MainContext from "../../../context/context";
-
+import Cookies from "js-cookie";
 const Login = () => {
   const { login } = useContext(MainContext);
   const navigate = useNavigate("");
@@ -18,27 +18,32 @@ const Login = () => {
     validationSchema: loginValidation,
     onSubmit: async ({ email, password }, actions) => {
       try {
-        const users = await controller.getAll(endpoints.users);
-        const validUser = users.data.find(
-          (x) => x.email === email && x.password === password && x.role === "client"
-        );
+        const response = await controller.post("/login", {
+          email: email,
+          password: password,
+        });
 
-        if (validUser) {
+        if (response.auth) {
           actions.resetForm();
-            login(validUser);
-            Swal.fire({
+          login(response.user);
+
+          //!token
+          const token = response.token;
+
+          Cookies.set("token", token, { expires: 1 });
+          Swal.fire({
             position: "top-end",
             icon: "success",
-            title: "Signed in successfully",
+            title: response.message,
             showConfirmButton: false,
             timer: 1000,
-          })
+          });
           navigate("/");
         } else {
           Swal.fire({
             position: "top-end",
             icon: "error",
-            title: "Email or password is incorrect!",
+            title: response.message,
             showConfirmButton: false,
             timer: 1000,
           });
@@ -65,31 +70,42 @@ const Login = () => {
               <div className="form-wrapper">
                 <form onSubmit={formik.handleSubmit}>
                   <div className="form-group">
+                    <label htmlFor="email">Email</label>
+
                     <input
                       type="text"
                       className="form-control"
                       placeholder="E-mail"
                       name="email"
+                      c
+                      id="email"
                       value={formik.values.email}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                     />
                     {formik.touched.email && formik.errors.email && (
-                      <small style={{ color: "red" }}>{formik.errors.email}</small>
+                      <small style={{ color: "red" }}>
+                        {formik.errors.email}
+                      </small>
                     )}
                   </div>
                   <div className="form-group">
+                    <label htmlFor="password">Password</label>
+
                     <input
                       type="password"
                       className="form-control"
                       placeholder="Password"
                       name="password"
+                      id="password"
                       value={formik.values.password}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
                     />
                     {formik.touched.password && formik.errors.password && (
-                      <small style={{ color: "red" }}>{formik.errors.password}</small>
+                      <small style={{ color: "red" }}>
+                        {formik.errors.password}
+                      </small>
                     )}
                   </div>
                   <Link to="/register">Don't have an account?</Link>

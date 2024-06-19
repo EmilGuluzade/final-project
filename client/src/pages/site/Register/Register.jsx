@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useFormik } from "formik";
 import { Link, useNavigate } from "react-router-dom";
 import User from "../../../classes/User";
@@ -9,6 +9,13 @@ import controller from "../../../services/api/requests";
 
 const Register = () => {
   const navigate = useNavigate("");
+const [image,setImage]=useState(null)
+
+const  handleImageChange=(e,setFieldValue)=> {
+  const file=e.currentTarget.files[0]
+  setImage(file)
+  setFieldValue("src",file)
+}
 
   const formik = useFormik({
     initialValues: {
@@ -20,10 +27,23 @@ const Register = () => {
     },
     validationSchema: userValidation,
     onSubmit: async ({ username, email, password, src }, actions) => {
+      const formData = new FormData();
+      
       const newUser = new User(username, email, password, src);
-      const response = await controller.post(endpoints.users, newUser);
-      actions.resetForm();
     
+      formData.append("src", newUser.src);
+      formData.append("username", newUser.username);
+      formData.append("password", newUser.password);
+      formData.append("email", newUser.email);
+
+      formData.append("role", "client");
+      formData.append("banDate", newUser.banDate);
+      formData.append("banCount", newUser.banCount);
+      formData.append("isBanned", newUser.isBanned);
+      
+      
+      const response = await controller.post(endpoints.users, formData);
+      actions.resetForm();
       if (response.error) {
         Swal.fire({
           position: "top-end",
@@ -40,10 +60,10 @@ const Register = () => {
           showConfirmButton: false,
           timer: 1000,
         }).then(() => {
-          navigate("/login"); 
+          navigate("/login");
         });
       }
-    }
+    },
   });
 
   return (
@@ -54,15 +74,18 @@ const Register = () => {
             <div className="col-md-18 col-lg-6">
               <h2 className="text-center">Create an Account</h2>
               <div className="form-wrapper">
-                <form onSubmit={formik.handleSubmit}>
+                <form encType="multipart/form-data"  onSubmit={formik.handleSubmit}>
                   <div className="row">
                     <div className="">
                       <div className="form-group">
+                        <label htmlFor="username">Name</label>
+
                         <input
                           type="text"
                           className="form-control"
                           placeholder="User name"
                           name="username"
+                          id="username"
                           value={formik.values.username}
                           onChange={formik.handleChange}
                           onBlur={formik.handleBlur}
@@ -76,13 +99,16 @@ const Register = () => {
                     </div>
                     <div className="">
                       <div className="form-group">
+                        <label htmlFor="src">Profile Image</label>
                         <input
-                          type="text"
+                          type="file"
                           className="form-control"
                           placeholder="Image url"
                           name="src"
-                          value={formik.values.src}
-                          onChange={formik.handleChange}
+                          id="src"
+                          onChange={(e)=>{
+                         handleImageChange(e,formik.setFieldValue)   
+                          }}
                           onBlur={formik.handleBlur}
                         />
                         {formik.touched.src && formik.errors.src && (
@@ -94,11 +120,14 @@ const Register = () => {
                     </div>
                   </div>
                   <div className="form-group">
+                    <label htmlFor="email">Email</label>
+
                     <input
                       type="text"
                       className="form-control"
                       placeholder="E-mail"
                       name="email"
+                      id="email"
                       value={formik.values.email}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
@@ -110,11 +139,14 @@ const Register = () => {
                     )}
                   </div>
                   <div className="form-group">
+                    <label htmlFor="password">Password</label>
+
                     <input
                       type="password"
                       className="form-control"
                       placeholder="Password"
                       name="password"
+                      id="password"
                       value={formik.values.password}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}
@@ -126,11 +158,14 @@ const Register = () => {
                     )}
                   </div>
                   <div className="form-group">
+                    <label htmlFor="confirmPassword">Confirm Password</label>
+
                     <input
                       type="password"
                       className="form-control"
                       placeholder="Confirm Password"
                       name="confirmPassword"
+                      id="confirmPassword"
                       value={formik.values.confirmPassword}
                       onChange={formik.handleChange}
                       onBlur={formik.handleBlur}

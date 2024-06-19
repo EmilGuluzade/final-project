@@ -1,10 +1,16 @@
 import axios from "axios";
 import { BASE_URL } from "./constants";
-
+// import Cookies from "js-cookie"
 //! get all
 async function getAll(endpoint) {
+  // const token =  Cookies.get("token")
   try {
-    const response = await axios.get(BASE_URL + endpoint);
+    const response = await axios.get(BASE_URL + endpoint
+    //   ,
+    //   {method:"GET",headers:{
+    //   'Authorization':`Bearer ${token}`
+    // }}
+  );
     return response.data;
   } catch (error) {
     return error;
@@ -62,13 +68,15 @@ async function put(endpoint, id, payload) {
   }
 }
 
+
+
 const controller = {
   post: post,
   getAll: getAll,
   getOne: getOne,
   delete: deleteOne,
   patch: patch,
-  put: put
+  put: put,
 };
 
 export default controller;

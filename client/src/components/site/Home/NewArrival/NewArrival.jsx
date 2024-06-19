@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import ProductCard from '../../Cards/ProductCard/ProductCard'
 import AOS from "aos";
 import "aos/dist/aos.css";
+import MainContext from '../../../../context/context';
 const NewArrival = () => {
+  const {products}=useContext(MainContext)
+
     useEffect(() => {
         AOS.init({
           disable: "phone",
@@ -17,22 +20,14 @@ const NewArrival = () => {
 			<div data-aos="zoom-in-down" class="h-sub maxW-825">Hurry up! Limited</div>
 		</div>
 <div className="row">
-    <ProductCard></ProductCard>
-    <ProductCard></ProductCard>
 
-    <ProductCard></ProductCard>
+{products&& products.slice(-4).map((item,index)=>(
+   <ProductCard key={index} data={item} ></ProductCard>
+))
+   
+  
 
-    <ProductCard></ProductCard>
-
-    <ProductCard></ProductCard>
-
-
-
-    <ProductCard></ProductCard>
-
-    <ProductCard></ProductCard>
-
-
+}
 </div>
     </div>
   )

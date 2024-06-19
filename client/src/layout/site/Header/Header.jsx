@@ -11,7 +11,6 @@ const Header = () => {
   const [isSearch, setIsSearch] = useState(false);
   const [isScroll, setIsScroll] = useState(false);
   const { basket, user } = useContext(MainContext);
-const [count,setCount]=useState(0)
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
@@ -25,9 +24,7 @@ const [count,setCount]=useState(0)
     };
   }, []);
 
-  useEffect(() => {
-    setCount(count+1)
-  }, [user]);
+ 
   return (
     <>
       <header className="hdr-top">
@@ -82,7 +79,11 @@ const [count,setCount]=useState(0)
           </div>
         </div>
       </header>
-      <header className={`hdr-bottom ${isScroll ? "fixed-header" : ""}`}>
+      <header className={`hdr-bottom ${isScroll ? "fixed-header" : ""}`} style={
+          isScroll
+            ? { position: "fixed", width: "100%", top: "0" }
+            : { position: "static" }
+        }>
         <div className="container">
           <div className="row justify-content-between">
             <div className="hdr-bottom__logo col-lg-4 col-6">
@@ -120,31 +121,31 @@ const [count,setCount]=useState(0)
                       </Link>
                     </li>
 
-                    {
-                      user.id && <>
-                         <li>
-                      <Link onClick={() => setIsOpen(false)} to="/login">
-                        Account
-                      </Link>
-                    </li>
-                    <li>
-                      <Link onClick={() => setIsOpen(false)} to="/basket">
-                        Cart
-                      </Link>
-                    </li>
-                    <li>
-                      <Link onClick={() => setIsOpen(false)} to="/checkout">
-                        Checkout
-                      </Link>
-                    </li>
-                    <li>
-                      <Link onClick={() => setIsOpen(false)} to="/wishlist">
-                        Wishlist
-                      </Link>
-                    </li>
+                    {user.id && (
+                      <>
+                        <li>
+                          <Link onClick={() => setIsOpen(false)} to="/accountdetails">
+                            Account
+                          </Link>
+                        </li>
+                        <li>
+                          <Link onClick={() => setIsOpen(false)} to="/basket">
+                            Cart
+                          </Link>
+                        </li>
+                        <li>
+                          <Link onClick={() => setIsOpen(false)} to="/checkout">
+                            Checkout
+                          </Link>
+                        </li>
+                        <li>
+                          <Link onClick={() => setIsOpen(false)} to="/wishlist">
+                            Wishlist
+                          </Link>
+                        </li>
                       </>
-                    }
-                   
+                    )}
+
                     <li>
                       <Link onClick={() => setIsOpen(false)} to="/faq">
                         FAQ
@@ -264,28 +265,30 @@ const [count,setCount]=useState(0)
                 Gallery
               </Link>
             </li>
-            {user.id && <>
-              <li>
-              <Link onClick={() => setIsSidebar(false)} to="/login">
-                Account
-              </Link>
-            </li>
-            <li>
-              <Link onClick={() => setIsSidebar(false)} to="/basket">
-                Cart
-              </Link>
-            </li>
-            <li>
-              <Link onClick={() => setIsSidebar(false)} to="/checkout">
-                Checkout
-              </Link>
-            </li>
-            <li>
-              <Link onClick={() => setIsSidebar(false)} to="/wishlist">
-                Wishlist
-              </Link>
-            </li>
-            </>}
+            {user.id && (
+              <>
+                <li>
+                  <Link onClick={() => setIsSidebar(false)} to="/login">
+                    Account
+                  </Link>
+                </li>
+                <li>
+                  <Link onClick={() => setIsSidebar(false)} to="/basket">
+                    Cart
+                  </Link>
+                </li>
+                <li>
+                  <Link onClick={() => setIsSidebar(false)} to="/checkout">
+                    Checkout
+                  </Link>
+                </li>
+                <li>
+                  <Link onClick={() => setIsSidebar(false)} to="/wishlist">
+                    Wishlist
+                  </Link>
+                </li>
+              </>
+            )}
             <li>
               <Link onClick={() => setIsSidebar(false)} to="/faq">
                 FAQ

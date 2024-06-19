@@ -1,3 +1,34 @@
+
+
+.product-detail {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.product__card:hover .product-detail {
+  opacity: 1;
+}
+
+.button-container a {
+display: none !important;
+  transition: opacity 0.3s ease;
+}
+
+.product__card:hover .button-container a {
+ display: block !important;
+}
+
+.isCollection{
+  font-weight: 800;
+  text-decoration: underline;
+}
 .product__card {
   position: relative;
   overflow: hidden;

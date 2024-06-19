@@ -1,8 +1,12 @@
 import React from 'react'
+import { Helmet } from 'react-helmet-async'
 
 const Category = () => {
   return (
-    <div>
+    <div> 
+    <Helmet>
+    <title> Category</title>
+</Helmet>
       
     </div>
   )

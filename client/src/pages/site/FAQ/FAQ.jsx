@@ -1,8 +1,12 @@
 import React from 'react'
+import { Helmet } from 'react-helmet-async'
 
 const FAQ = () => {
   return (
     <div class="holder">
+	 <Helmet>
+    <title> FAQ</title>
+</Helmet>
 	<div class="container">
 		<div class="page-title text-center">
 			<h1>FAQ’S</h1>

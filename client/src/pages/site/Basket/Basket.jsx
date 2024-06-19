@@ -1,11 +1,14 @@
 import React, { useContext } from 'react'
 import MainContext from '../../../context/context'
+import { Helmet } from 'react-helmet-async'
 
 const Basket = () => {
     const {basket}=useContext(MainContext)
   return (
     <>
-
+    <Helmet>
+            <title>Cart</title>
+        </Helmet>
 
         {
             basket.length<1?(<div class="holder mt-0">

@@ -6,9 +6,9 @@ import PrimaryButton from "../../PrimaryButton/PrimaryButton";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-const SliderProductCard = () => {
-  const [rating, setRating] = useState(4);
-  const [isHover, setIsHover] = useState(false);
+const SliderProductCard = ({data}) => {
+
+
 
   useEffect(() => {
     AOS.init({
@@ -21,17 +21,19 @@ const SliderProductCard = () => {
   return (
     <div
       data-aos="fade-right"
-      onMouseEnter={() => setIsHover(true)}
-      onMouseLeave={() => setIsHover(false)}
+     
       className="px-3 "
     >
       <div className="product__card ">
         <Link to="/catgery" className="product__card-hdr">
           <img
-            src="https://big-skins.com/frontend/foxic-html-demo/images/skins/fashion/products/product-03-1.webp"
+            src={data.images[0]}
             alt=""
+          
+
+            style={{  width:"100%",height:"300px",objectFit:"cover"}}
           />
-          {isHover ? (
+         
             <div className="product-detail">
               <Link to="#">
                 <i class="fa-thin fa-heart"></i>
@@ -42,32 +44,26 @@ const SliderProductCard = () => {
                 <p className="detailLeft">view detail</p>
               </Link>
             </div>
-          ) : (
-            ""
-          )}
+         
         </Link>
         <div className="product__card-content">
           <div className="product__card-rating d-flex justify-content-center">
-            <Rating readonly={true} initialValue={rating} size={20} />
+            <Rating readonly={true} initialValue={data.rating} size={20} />
           </div>
           <div className="product__card-info d-flex flex-column align-items-center">
             <Link to="/category" className="product-brand">
-              {" "}
-              Foxic
+            {data.brand}
             </Link>
 
             <Link to="/category" className="product-title">
-              {" "}
-              Oversized Cotton Blouse{" "}
+              
+              {data.title}
             </Link>
             <div className="button-container" style={{ height: "50px" }}>
-              {isHover ? (
                 <PrimaryButton onClick={() => console.log("sa")}>
                   Add To Basket
                 </PrimaryButton>
-              ) : (
-                <p className="product-price">100$</p>
-              )}
+                <p className="product-price">{data.price}$</p>
             </div>
           </div>
         </div>

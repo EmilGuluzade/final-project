@@ -6,11 +6,12 @@ import loginValidation from "../../../../validations/login.validation";
 import { endpoints } from "../../../../services/api/constants";
 import controller from "../../../../services/api/requests";
 import Swal from "sweetalert2";
+import Cookies from "js-cookie";
 
 const QuickLogin = ({ isOpen, setIsOpen }) => {
   const navigate = useNavigate("");
 
-  const { user, logout,login } = useContext(MainContext);
+  const { user, logout, login } = useContext(MainContext);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -18,28 +19,42 @@ const QuickLogin = ({ isOpen, setIsOpen }) => {
     },
     validationSchema: loginValidation,
     onSubmit: async ({ email, password }, actions) => {
-      const users = await controller.getAll(endpoints.users);
-      const validUser = users.data.find(
-        (x) => x.email == email && x.password == password && x.role == "client"
-      );
+      try {
+        const response = await controller.post("/login", {
+          email: email,
+          password: password,
+        });
 
-      if (validUser) {
-        actions.resetForm();
-        login(validUser);
-     await  Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Signed up successfully",
-          showConfirmButton: false,
-          timer: 1000,
-        })
+        if (response.auth) {
+          actions.resetForm();
+          login(response.user);
+
+          //!token
+          const token = response.token;
+
+          Cookies.set("token", token, { expires: 1 });
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: response.message,
+            showConfirmButton: false,
+            timer: 1000,
+          });
           navigate("/");
-       
-      } else {
+        } else {
+          Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: response.message,
+            showConfirmButton: false,
+            timer: 1000,
+          });
+        }
+      } catch (error) {
         Swal.fire({
           position: "top-end",
           icon: "error",
-          title: "email or password is incorrect !",
+          title: "Something went wrong!",
           showConfirmButton: false,
           timer: 1000,
         });
@@ -67,7 +82,8 @@ const QuickLogin = ({ isOpen, setIsOpen }) => {
                   onClick={() => {
                     setIsOpen(false);
                     logout();
-                    
+                    Cookies.remove("token");
+
                   }}
                   to="/login"
                 >

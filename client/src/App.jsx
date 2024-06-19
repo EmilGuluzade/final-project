@@ -16,6 +16,8 @@ function App() {
   const [data, setData] = useState([]);
   const router = createBrowserRouter(ROUTES);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
+  const [products, setProducts] = useState([]);
+
   const [basket, setBasket] = useState(
     localStorage.getItem("basket")
       ? JSON.parse(localStorage.getItem("basket"))
@@ -26,11 +28,16 @@ function App() {
       ? JSON.parse(localStorage.getItem("wishlist"))
       : []
   );
+// useEffect(async ()=>{
+// const users = await controller.getAll(endpoints.users)
+// setData(users)
+// },[])
+
 
   useEffect(() => {
     localStorage.setItem("basket", JSON.stringify(basket));
     localStorage.setItem("wishlist", JSON.stringify(wishlist));
-  }, [basket, wishlist]);
+  }, []);
 
   useEffect(() => {
     if (!localStorage.getItem("user")) {
@@ -44,7 +51,20 @@ function App() {
         })
       );
     }
+
+
+
+
   }, []);
+useEffect(()=>{
+async function getProducts() {
+  const response=await controller.getAll(endpoints.products)
+  setProducts(response.data)
+  
+}
+getProducts()
+},[])
+
 
   function addToBasket(id) {
     let basketItem = basket.find((x) => x._id == id);
@@ -143,6 +163,8 @@ function App() {
     logout,
     user,
     setUser,
+    products,
+   setProducts
   };
   return (
     <MainContext.Provider value={contextData}>

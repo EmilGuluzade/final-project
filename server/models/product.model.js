@@ -28,16 +28,16 @@ var productSchema = new mongoose.Schema(
       type: Number,
       required: true,
     },
-    size: {
-      type: String,
-      required: true,
-    },
+    // size: {
+    //   type: String,
+    //   required: true,
+    // },
     collections: {
       type: String,
       required: true,
     },
     images: [],
-    color: [],
+    // color: [],
     rating: {
       type: Number,
       required: true,

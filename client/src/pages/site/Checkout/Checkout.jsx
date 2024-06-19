@@ -1,8 +1,12 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 
 const Checkout = () => {
   return (
     <div class="holder">
+     <Helmet>
+    <title> Checkout</title>
+</Helmet>
       <div class="container">
         <h1 class="text-center">Checkout page</h1>
         <div class="row">

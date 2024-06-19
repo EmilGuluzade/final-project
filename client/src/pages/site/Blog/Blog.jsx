@@ -1,10 +1,14 @@
 import React from "react";
 import BlogCard from "../../../components/site/Cards/BlogCard/BlogCard";
 import PaginatedItems from "../../../components/site/Blog/Pagination/PaginatedItems ";
+import { Helmet } from "react-helmet-async";
 
 const Blog = () => {
   return (
     <div class="holder">
+        <Helmet>
+            <title>Blog</title>
+        </Helmet>
       <div class="container">
         <div class="page-title text-center">
           <h1>Our Blog</h1>
