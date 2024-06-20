@@ -2,11 +2,16 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import MainContext from "../../../context/context";
 import ProductCard from "../../../components/site/Cards/ProductCard/ProductCard";
+import { Helmet } from "react-helmet-async";
 
 const Wishlist = () => {
   const { user } = useContext(MainContext);
   return (
     <div className="holder">
+       <Helmet>
+        <title> Wishlist </title>
+      </Helmet>
+
       <div className="container">
         <div className="row">
           <div className="col-3 aside aside--left">

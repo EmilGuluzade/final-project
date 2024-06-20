@@ -1,5 +1,7 @@
 import React from 'react'
 import { Helmet } from 'react-helmet-async'
+import BannerGrid from '../../../components/site/Category/BannerGrid/BannerGrid'
+import ProductList from '../../../components/site/Category/ProductList/ProductList'
 
 const Category = () => {
   return (
@@ -8,6 +10,8 @@ const Category = () => {
     <title> Category</title>
 </Helmet>
       
+      <BannerGrid></BannerGrid>
+      <ProductList></ProductList>
     </div>
   )
 }

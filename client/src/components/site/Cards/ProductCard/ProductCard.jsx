@@ -23,7 +23,7 @@ const ProductCard = ({data}) => {
       className="col-lg-3 col-md-4 col-sm-6 px-3 "
     >
       <div className="product__card ">
-        <Link to="/catgery" className="product__card-hdr">
+        <Link to={`/product/${data._id}`}  className="product__card-hdr">
           <img
             src={data.images[0]}
             alt=""
@@ -34,7 +34,7 @@ const ProductCard = ({data}) => {
                 <i class="fa-thin fa-heart"></i>
               </Link>
 
-              <Link to={`/detail/${"id"}`}>
+              <Link to={`/product/${data._id}`}>
                 <i class="fa-light fa-eye"></i>
                 <p className="detailLeft">view detail</p>
               </Link>
@@ -42,14 +42,14 @@ const ProductCard = ({data}) => {
         </Link>
         <div className="product__card-content">
           <div className="product__card-rating d-flex justify-content-center">
-            <Rating readonly={true} initialValue={data.rating} size={20} />
+          <Rating readonly={true} initialValue={data.rating} size={20} />
           </div>
           <div className="product__card-info d-flex flex-column align-items-center">
-            <Link to="/category" className="product-brand">
+            <Link to={`/product/${data._id}`} className="product-brand">
             {data.brand}
             </Link>
 
-            <Link to="/category" className="product-title">
+            <Link to={`/product/${data._id}`} className="product-title">
             {data.title}
             </Link>
             <div className="button-container" style={{ height: "50px" }}>

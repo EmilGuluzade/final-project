@@ -3,6 +3,7 @@ import "./Header.scss";
 import { Link } from "react-router-dom";
 import MainContext from "../../../context/context";
 import QuickLogin from "../../../components/site/Home/QuickLogin/QuickLogin";
+import { Rating } from "react-simple-star-rating";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,7 +11,8 @@ const Header = () => {
   const [isCardBar, setIsCardBar] = useState(false);
   const [isSearch, setIsSearch] = useState(false);
   const [isScroll, setIsScroll] = useState(false);
-  const { basket, user } = useContext(MainContext);
+  const { basket, user, products } = useContext(MainContext);
+  const [search, setSearch] = useState( );
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
@@ -24,7 +26,6 @@ const Header = () => {
     };
   }, []);
 
- 
   return (
     <>
       <header className="hdr-top">
@@ -79,11 +80,14 @@ const Header = () => {
           </div>
         </div>
       </header>
-      <header className={`hdr-bottom ${isScroll ? "fixed-header" : ""}`} style={
+      <header
+        className={`hdr-bottom ${isScroll ? "fixed-header" : ""}`}
+        style={
           isScroll
             ? { position: "fixed", width: "100%", top: "0" }
             : { position: "static" }
-        }>
+        }
+      >
         <div className="container">
           <div className="row justify-content-between">
             <div className="hdr-bottom__logo col-lg-4 col-6">
@@ -124,7 +128,10 @@ const Header = () => {
                     {user.id && (
                       <>
                         <li>
-                          <Link onClick={() => setIsOpen(false)} to="/accountdetails">
+                          <Link
+                            onClick={() => setIsOpen(false)}
+                            to="/accountdetails"
+                          >
                             Account
                           </Link>
                         </li>
@@ -172,7 +179,8 @@ const Header = () => {
             </div>
             <ul className="hdr-bottom__right col-lg-4 col-6">
               <li>
-                <Link to="#" onClick={() => setIsSearch(!isSearch)}>
+                <Link to="#" onClick={() => {setIsSearch(!isSearch)
+                  setSearch("")}}>
                   <i className="fa-thin fa-magnifying-glass"></i>
                 </Link>
               </li>
@@ -209,14 +217,53 @@ const Header = () => {
         </div>
 
         {isSearch && (
-          <div className="search-div">
+          <div className="search-div ">
             <div className="container">
-              <input type="text" placeholder="What are you looking for?" />
+              <input
+                type="text"
+                placeholder="What are you looking for?"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
               <i
-                onClick={() => setIsSearch(!isSearch)}
+                onClick={() => {setIsSearch(!isSearch)
+                  setSearch("")}}
                 className="fa-solid fa-x"
               ></i>
             </div>
+            {
+              search && (
+                <div className="container  " style={{zIndex:"300",backgroundColor:"white"}}>
+                <div className="w-100" style={{overflowY:"scroll",overflowX:"hidden",height:"300px"}}>
+                {
+                products.filter(x => x.title.toLowerCase().includes(search.toLowerCase()))
+                  .map((item, index) => (
+                    <Link onClick={()=>setIsSearch(false)}  to={`/product/${item._id}`} key={index} className="prd-crd col-12  d-flex py-3 align-items-center ">
+                      <div className="col-4 ">
+                        <img
+                          width={"60px"}
+                          height="70px"
+                          src={item.images && item.images[0]}
+                          alt=""
+                        />
+                      </div>
+                      <div className="col-6">
+                        <h3 >{item.title} </h3>
+          <Rating readonly={true} initialValue={item.rating} size={20} />
+
+                      </div>
+                      <div className="col-2">
+                        <p>{item.price} $</p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+            
+            </div>
+              )
+              
+            }
+           
           </div>
         )}
       </header>

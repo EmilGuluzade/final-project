@@ -6,6 +6,7 @@ import userValidation from "../../../validations/user.validation";
 import Swal from "sweetalert2";
 import { endpoints } from "../../../services/api/constants";
 import controller from "../../../services/api/requests";
+import { Helmet } from "react-helmet-async";
 
 const Register = () => {
   const navigate = useNavigate("");
@@ -68,6 +69,9 @@ const  handleImageChange=(e,setFieldValue)=> {
 
   return (
     <div className="page-content" style={{ minHeight: "1.8px" }}>
+     <Helmet>
+        <title> Register </title>
+      </Helmet>
       <div className="holder">
         <div className="container">
           <div className="row justify-content-center">

@@ -84,10 +84,7 @@ const ROUTES = [
       {
         path: "/register",
         element: <Register></Register>,
-      }, {
-        path: "*",
-        element: <Error></Error>,
-      },
+      }, 
     ],
   },
 
@@ -98,12 +95,13 @@ const ROUTES = [
       {
         path: "",
         element: <DashBoard />,
-      },{
-        path: "*",
-        element: <Error></Error>,
       },
     ],
   },
+  {
+    path: "*",
+    element: <Error></Error>,
+  }
 ];
 
 export default ROUTES;

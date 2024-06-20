@@ -7,6 +7,7 @@ import controller from "../../../services/api/requests";
 import loginValidation from "../../../validations/login.validation";
 import MainContext from "../../../context/context";
 import Cookies from "js-cookie";
+import { Helmet } from "react-helmet-async";
 const Login = () => {
   const { login } = useContext(MainContext);
   const navigate = useNavigate("");
@@ -62,6 +63,9 @@ const Login = () => {
 
   return (
     <div className="page-content" style={{ minHeight: "1.8px" }}>
+     <Helmet>
+        <title> Login  </title>
+      </Helmet>
       <div className="holder">
         <div className="container">
           <div className="row justify-content-center">

@@ -2,6 +2,7 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Link } from "react-router-dom";
 
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
@@ -49,9 +50,9 @@ const LatestBlog = () => {
       <div class="container">
         <div class="title-wrap text-center ">
           <h2 class="h1-style text-center">
-            <a href="blog.html" title="View all" data-aos="zoom-in-down">
+            <Link to="/blog" title="View all" data-aos="zoom-in-down">
               Latest From Blog
-            </a>
+            </Link>
           </h2>
           <div
             class="carousel-arrows"

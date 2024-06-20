@@ -28,10 +28,10 @@ function App() {
       ? JSON.parse(localStorage.getItem("wishlist"))
       : []
   );
-// useEffect(async ()=>{
-// const users = await controller.getAll(endpoints.users)
-// setData(users)
-// },[])
+useEffect(async ()=>{
+const users = await controller.getAll(endpoints.users)
+setData(users)
+},[])
 
 
   useEffect(() => {
@@ -60,7 +60,7 @@ useEffect(()=>{
 async function getProducts() {
   const response=await controller.getAll(endpoints.products)
   setProducts(response.data)
-  
+  setLoading(false)
 }
 getProducts()
 },[])
