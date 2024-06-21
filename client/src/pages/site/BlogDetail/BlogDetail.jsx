@@ -7,6 +7,7 @@ const BlogDetail = () => {
           <Helmet>
             <title> BlogDetail</title>
         </Helmet>
+        
     </div>
   )
 }

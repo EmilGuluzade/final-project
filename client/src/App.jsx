@@ -17,6 +17,7 @@ function App() {
   const router = createBrowserRouter(ROUTES);
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const [products, setProducts] = useState([]);
+  const [blogs, setBlogs] = useState([]);
 
   const [basket, setBasket] = useState(
     localStorage.getItem("basket")
@@ -28,11 +29,10 @@ function App() {
       ? JSON.parse(localStorage.getItem("wishlist"))
       : []
   );
-useEffect(async ()=>{
-const users = await controller.getAll(endpoints.users)
-setData(users)
-},[])
-
+  useEffect(async () => {
+    const users = await controller.getAll(endpoints.users);
+    setData(users);
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("basket", JSON.stringify(basket));
@@ -51,20 +51,19 @@ setData(users)
         })
       );
     }
-
-
-
-
   }, []);
-useEffect(()=>{
-async function getProducts() {
-  const response=await controller.getAll(endpoints.products)
-  setProducts(response.data)
-  setLoading(false)
-}
-getProducts()
-},[])
-
+  useEffect(() => {
+    async function getAll() {
+      const resPro = await controller.getAll(endpoints.products);
+      const resblog= await controller.getAll(endpoints.blogs);
+      setBlogs(resblog.data);
+      setProducts(resPro.data);
+      setLoading(false);
+    }
+   
+    getAll()
+    
+  }, []);
 
   function addToBasket(id) {
     let basketItem = basket.find((x) => x._id == id);
@@ -121,8 +120,6 @@ getProducts()
     );
 
     setUser(JSON.parse(localStorage.getItem("user")));
-
-
   }
   function logout() {
     localStorage.setItem(
@@ -142,8 +139,7 @@ getProducts()
       title: "Signed out successfully",
       showConfirmButton: false,
       timer: 1000,
-    })
-    
+    });
   }
 
   const contextData = {
@@ -164,7 +160,8 @@ getProducts()
     user,
     setUser,
     products,
-   setProducts
+    setProducts,
+    blogs,
   };
   return (
     <MainContext.Provider value={contextData}>

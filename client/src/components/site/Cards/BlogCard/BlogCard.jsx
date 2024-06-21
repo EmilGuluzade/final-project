@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const BlogCard = () => {
+const BlogCard = ({data}) => {
   return (
     <div class="post-prw">
     <div class="row vert-margin-middle d-flex">
@@ -25,7 +25,7 @@ const BlogCard = () => {
           </div>
         </div>
         <h4 class="post-prw-title">
-          <Link to="/blogdetail/:id">Home page visual builder</Link>
+          <Link to={`/blogdetail/{data._id}`}>Home page visual builder</Link>
         </h4>
         <div class="post-prw-teaser">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit,

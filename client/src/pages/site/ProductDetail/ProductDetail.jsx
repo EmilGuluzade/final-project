@@ -94,7 +94,6 @@ const ProductDetail = () => {
   ];
 
   const { products } = useContext(MainContext);
-  const [collection, setCollection] = useState("women");
 
   const slider = React.useRef(null);
   var settings = {

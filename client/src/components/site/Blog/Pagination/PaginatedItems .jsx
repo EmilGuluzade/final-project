@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import ReactPaginate from 'react-paginate';
 import BlogCard from '../../Cards/BlogCard/BlogCard';
+import MainContext from '../../../../context/context';
 
-const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14];
+
 
 function Items({ currentItems }) {
   return (
     <>
       {currentItems &&
-        currentItems.map((item) => (
-            <BlogCard></BlogCard>
+        currentItems.map((item,index) => (
+            <BlogCard key={index} data={item}></BlogCard>
 
         ))}
     </>
@@ -20,14 +21,14 @@ function Items({ currentItems }) {
 function PaginatedItems({ itemsPerPage }) {
 
   const [itemOffset, setItemOffset] = useState(0);
-
+  const {blogs}=useContext(MainContext)
   const endOffset = itemOffset + itemsPerPage;
   console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-  const currentItems = items.slice(itemOffset, endOffset);
-  const pageCount = Math.ceil(items.length / itemsPerPage);
+  const currentItems = blogs.slice(itemOffset, endOffset);
+  const pageCount = Math.ceil(blogs.length / itemsPerPage);
 
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % items.length;
+    const newOffset = (event.selected * itemsPerPage) % blogs.length;
     console.log(
       `User requested page number ${event.selected}, which is offset ${newOffset}`
     );
