@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import classNames from 'classnames';
-import "./Slider.scss"
+import React, { useState, useEffect, useRef } from "react";
+import classNames from "classnames";
+import "./Slider.scss";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import PrimaryButton from '../../PrimaryButton/PrimaryButton';
+import PrimaryButton from "../../PrimaryButton/PrimaryButton";
 const Slider = () => {
   const IMAGE_PARTS = 4;
   const AUTOCHANGE_TIME = 4000;
@@ -13,26 +13,25 @@ const Slider = () => {
   const changeTO = useRef(null);
   useEffect(() => {
     AOS.init({
-      disable: "phone",
+      disable: window.innerWidth < 1024,
+
       duration: 900,
       easing: "ease-out-cubic",
     });
   }, []);
   const slides = [
     {
-      title: 'Best Price This Year',
-      description: 'eCommerce HTML Tempplate',
-      margin:"0 0 0 300px"
-       ,
-      img: 'https://big-skins.com/frontend/foxic-html-demo/images/skins/fashion/slider/slide-fashion-02.webp',
+      title: "Best Price This Year",
+      description: "eCommerce HTML Tempplate",
+      margin: "0 0 0 300px",
+      img: "https://big-skins.com/frontend/foxic-html-demo/images/skins/fashion/slider/slide-fashion-02.webp",
     },
     {
-      title: 'Best Rated Theme 2020',
-      description: 'eCommerce HTML Tempplate',
-       margin:"0 300px 0 0",
-      img: 'https://big-skins.com/frontend/foxic-html-demo/images/skins/fashion/slider/slide-fashion-01.webp',
+      title: "Best Rated Theme 2020",
+      description: "eCommerce HTML Tempplate",
+      margin: "0 300px 0 0",
+      img: "https://big-skins.com/frontend/foxic-html-demo/images/skins/fashion/slider/slide-fashion-01.webp",
     },
-    
   ];
   const runAutochangeTO = () => {
     changeTO.current = setTimeout(() => {
@@ -63,27 +62,29 @@ const Slider = () => {
   }, []);
 
   return (
-    <div className={classNames('slider', { 's--ready': sliderReady })}>
- 
+    <div className={classNames("slider", { "s--ready": sliderReady })}>
       <div className="slider__slides">
         {slides.map((slide, index) => (
           <div
-            className={classNames('slider__slide', {
-              's--active': activeSlide === index,
-              's--prev': prevSlide === index
+            className={classNames("slider__slide", {
+              "s--active": activeSlide === index,
+              "s--prev": prevSlide === index,
             })}
             key={slide.title}
           >
-            <div className="slider__slide-content" style={{margin:slide.margin}}>
-              <h3 className="slider__slide-subheading">
-                {slide.description }
-              </h3>
+            <div
+              className="slider__slide-content"
+              style={{ margin: slide.margin }}
+            >
+              <h3 className="slider__slide-subheading">{slide.description}</h3>
               <h2 className="slider__slide-heading">
-                {slide.title.split('').map((l, i) => (
+                {slide.title.split("").map((l, i) => (
                   <span key={i}>{l}</span>
                 ))}
               </h2>
-              <p className="slider__slide-readmore"><PrimaryButton>Shop Now</PrimaryButton></p>
+              <p className="slider__slide-readmore">
+                <PrimaryButton>Shop Now</PrimaryButton>
+              </p>
             </div>
             <div className="slider__slide-parts">
               {[...Array(IMAGE_PARTS)].map((x, i) => (
@@ -99,10 +100,12 @@ const Slider = () => {
         ))}
       </div>
       <div className="slider__control" onClick={() => changeSlides(-1)} />
-      <div className="slider__control slider__control--right" onClick={() => changeSlides(1)} />
+      <div
+        className="slider__control slider__control--right"
+        onClick={() => changeSlides(1)}
+      />
     </div>
   );
 };
-
 
 export default Slider;

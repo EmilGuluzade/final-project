@@ -3,12 +3,25 @@ import { Link } from "react-router-dom";
 import AOS from "aos";
 import "aos/dist/aos.css";
 const Category = () => {
+
+ 
+
   useEffect(() => {
+    if (window.innerWidth < 768) {
+      const aosElements = document.querySelectorAll('[data-aos]');
+      aosElements.forEach(el => {
+        el.removeAttribute('data-aos');
+      });
+    }
     AOS.init({
-      disable: "phone",
+      
+      disable: window.innerWidth < 1024,
+  
       duration: 900,
       easing: "ease-out-cubic",
     });
+
+    
   }, []);
   return (
     <>

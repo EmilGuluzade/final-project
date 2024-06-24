@@ -5,10 +5,10 @@ import ProductCard from "../../../components/site/Cards/ProductCard/ProductCard"
 import { Helmet } from "react-helmet-async";
 
 const Wishlist = () => {
-  const { user } = useContext(MainContext);
+  const { wishlist, user } = useContext(MainContext);
   return (
     <div className="holder">
-       <Helmet>
+      <Helmet>
         <title> Wishlist </title>
       </Helmet>
 
@@ -30,16 +30,14 @@ const Wishlist = () => {
           <div className="col-9 aside">
             <h1 className="mb-3">My Wishlist</h1>
 
-            {
-                user.wishlist.length > 0 ? (
-              <div className="prd-grid-wrap position-relative">
-               
-
+            {wishlist.length > 0 ? (
+              <div className="prd-grid-wrap position-relative d-flex">
+                {wishlist && wishlist.map((item, index) => (
+                    <ProductCard key={index} data={item}></ProductCard>
+                  ))}
               </div>
             ) : (
-              <div className="empty-wishlist js-empty-wishlist text-center py-3 py-sm-5 "
-               
-              >
+              <div className="empty-wishlist js-empty-wishlist text-center py-3 py-sm-5 ">
                 <h3>Your Wishlist is empty</h3>
                 <div className="mt-5">
                   <Link to="/" className="btn">
@@ -47,9 +45,7 @@ const Wishlist = () => {
                   </Link>
                 </div>
               </div>
-            )
-            
-            }
+            )}
           </div>
         </div>
       </div>

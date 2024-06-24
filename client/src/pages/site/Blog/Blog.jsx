@@ -1,5 +1,4 @@
-import React from "react";
-import BlogCard from "../../../components/site/Cards/BlogCard/BlogCard";
+import React from "react"
 import PaginatedItems from "../../../components/site/Blog/Pagination/PaginatedItems ";
 import { Helmet } from "react-helmet-async";
 

@@ -29,9 +29,9 @@ const Login = () => {
           login(response.user);
 
           //!token
-          const token = response.token;
+          // const token = response.token;
 
-          Cookies.set("token", token, { expires: 1 });
+          // Cookies.set("token", token, { expires: 1 });
           Swal.fire({
             position: "top-end",
             icon: "success",
@@ -39,7 +39,13 @@ const Login = () => {
             showConfirmButton: false,
             timer: 1000,
           });
-          navigate("/");
+          
+          if (response.user.role=="client") {
+            navigate("/");
+            
+          } else {
+            navigate("/admin");
+          }
         } else {
           Swal.fire({
             position: "top-end",

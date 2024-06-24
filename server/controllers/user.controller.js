@@ -98,65 +98,67 @@ const user_controller = {
   register: async (req, res) => {
     try {
       const { username, email, password } = req.body;
-  
+
       // Check for duplicate username and email
       const [duplicateUserName, duplicateUserEmail] = await Promise.all([
         UserModel.findOne({ username }),
-        UserModel.findOne({ email })
+        UserModel.findOne({ email }),
       ]);
-  
+
       let message = "";
-  
+
       if (duplicateUserName) {
         message = "username already exists";
       }
-  
+
       if (duplicateUserEmail) {
         message = "email already exists";
       }
-  
+
       if (message) {
         return res.status(400).json({
           message: message,
           error: true,
         });
       }
-  
+
       // Hash the password
       const saltRounds = 10;
       const salt = await bcrypt.genSalt(saltRounds);
       const hashedPassword = await bcrypt.hash(password, salt);
-  
+
       // Construct new user object
       const newUser = {
         username,
         email,
         password: hashedPassword,
-        src: req.file ? `http://localhost:8080/api/uploads/${req.file.filename}` : null
+        src: req.file
+          ? `http://localhost:8080/api/uploads/${req.file.filename}`
+          : null,
       };
-  
+
       const user = new UserModel(newUser);
-  
+
       // Generate JWT token
       const token = jwt.sign(
         { email: newUser.email },
         process.env.PRIVATE_KEY,
         { expiresIn: "1d" }
       );
-  
+
       // Send verification email
       sendVerifyEmail(newUser.email, token);
-  
+
       // Save the new user
       await user.save();
-  
+
       res.status(201).json({
         message: "User registered successfully",
         error: false,
         data: user,
       });
     } catch (error) {
-      console.error('Registration error:', error);
+      console.error("Registration error:", error);
       res.status(500).json({
         message: "An error occurred during registration",
         error: true,
@@ -166,7 +168,6 @@ const user_controller = {
   user_login: async (req, res) => {
     const user = await UserModel.findOne({
       email: req.body.email,
-      role: "client",
     });
     if (user) {
       bcrypt.compare(
@@ -176,12 +177,12 @@ const user_controller = {
           if (response) {
             if (user.isVerified == true) {
               //generate token
-           const token=generateAccessToken(user)
+              const token = generateAccessToken(user);
               res.send({
                 message: "signed in successfully",
                 auth: true,
                 user: user,
-                token:token
+                token: token,
               });
             } else {
               res.send({
@@ -213,7 +214,7 @@ const user_controller = {
       const user = await UserModel.findOne({ email: email });
 
       if (user) {
-      await  UserModel.findByIdAndUpdate(user._id, { isVerified: true });
+        await UserModel.findByIdAndUpdate(user._id, { isVerified: true });
         res.redirect("http://localhost:5173/login");
         return;
       } else {
@@ -223,6 +224,86 @@ const user_controller = {
       return res.send({ message: "invalid token", auth: false });
     }
   },
+  addTobasket: async (req, res) => {
+    const { userId } = req.params;
+    const { productId, quantity } = req.body;
+
+    try {
+      let user = await UserModel.findById(userId);
+      user.basket.push({ product: productId, quantity: quantity });
+      await user.save();
+      res
+        .status(200)
+        .json({ success: true, message: "Product added to basket." });
+    } catch (error) {
+      console.error("Some error while adding basket:", error.message);
+      res
+        .status(500)
+        .json({ success: false, message: "Some error while adding basket." });
+    }
+  },
+  removeFrombasket: async (req, res) => {
+    const { userId, productId } = req.params;
+
+    try {
+      let user = await UserModel.findById(userId);
+      user.basket = user.basket.filter((item) => item.product != productId);
+      await user.save();
+
+      res.status(200).json({ success: true, message: "item removed basket." });
+    } catch (error) {
+      console.error(
+        "Some error while removing item from basket:",
+        error.message
+      );
+      res
+        .status(500)
+        .json({
+          success: false,
+          message: "Some error while removing item from basket.",
+        });
+    }
+  },
+  basket: async (req, res) => {
+    const { userId } = req.params;
+
+    try {
+      const user = await UserModel.findById(userId).populate("basket.product");
+      res.status(200).json(user.basket);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  },
+  updateBasketItem: async (req, res) => {
+    const { userId, productId } = req.params;
+    const { quantity } = req.body;
+  
+   
+  
+    try {
+      const user = await UserModel.findById(userId);
+  
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+  
+      const basketItem = user.basket.find(item => item.product.toString() === productId);
+  
+      if (!basketItem) {
+        return res.status(404).json({ error: 'Basket item not found' });
+      }
+  
+      basketItem.quantity = quantity;
+      await user.save();
+  
+      res.status(200).json({ message: 'Basket item updated successfully', updatedItem: basketItem });
+    } catch (error) {
+      console.error('Error updating basket item:', error.message);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  }
+  
+  
 };
 
 module.exports = user_controller;

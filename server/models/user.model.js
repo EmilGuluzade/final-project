@@ -21,8 +21,13 @@ const userSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    wishlist: {type:Array,default:[]},
-    basket:{type:Array,default:[]},
+    wishlist: {type:Array,default:[]}, 
+    basket: [
+      {
+        product: { type: mongoose.Schema.Types.ObjectId },
+        quantity: { type: Number, required: true }
+      }
+    ],
     isVerified: {
       type: Boolean,
       default: false,

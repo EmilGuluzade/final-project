@@ -9,10 +9,6 @@ var blogSchema = new mongoose.Schema(
     description: {
       type: String,
     },
-    tagIds: {
-      type: Array,
-      default: [],
-    },
     comments: {
       type: Array,
       default: [],

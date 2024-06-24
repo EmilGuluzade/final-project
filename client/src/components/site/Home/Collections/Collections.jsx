@@ -74,7 +74,8 @@ const [collection,setCollection]=useState("women")
 
   useEffect(() => {
     AOS.init({
-      disable: "phone",
+     disable: window.innerWidth < 1024,
+
       duration: 900,
       easing: "ease-out-cubic",
     });

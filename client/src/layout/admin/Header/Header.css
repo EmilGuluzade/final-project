@@ -1,0 +1,39 @@
+.adminsidebar {
+  background-color: #212529;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.accordionbg {
+  background-color: #212529 !important;
+  color: #9a9cae !important;
+  outline: none !important;
+}
+.accordionbg:hover {
+  color: white !important;
+}
+.accordion-button:focus {
+  z-index: 3;
+  outline: 0;
+  box-shadow: none !important;
+}
+.accordion-button::after {
+  color: white !important;
+}
+
+.adminlinks a {
+  color: #9a9cae;
+  transition: 0.3s;
+  margin: 0 20px 10px;
+}
+
+.adminlinks a:hover {
+  color: white;
+}
+
+.adminlinks a:focus {
+  text-decoration: none;
+  color: white;
+}

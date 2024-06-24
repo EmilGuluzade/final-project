@@ -1,6 +1,11 @@
 import Error from "../pages/Error/Error";
 import AdminRoot from "../pages/admin/AdminRoot";
-import DashBoard from "../pages/admin/DashBoard/DashBoard";
+import AllUsers from "../pages/admin/Users/All/All";
+import AddUser from "../pages/admin/Users/Add/Add";
+import AllBlogs from "../pages/admin/Blogs/All/All";
+import AddBlog from "../pages/admin/Blogs/Add/Add";
+import AddProduct from "../pages/admin/Products/Add/Add";
+import AllProducts from "../pages/admin/Products/All/All";
 import About from "../pages/site/About/About";
 import AccountDetails from "../pages/site/AccountDetail/AccountDetails";
 import Basket from "../pages/site/Basket/Basket";
@@ -17,7 +22,8 @@ import ProductDetail from "../pages/site/ProductDetail/ProductDetail";
 import Register from "../pages/site/Register/Register";
 import SiteRoot from "../pages/site/SiteRoot";
 import Wishlist from "../pages/site/Wishlist/Wishlist";
-
+import EditProduct from "../pages/admin/Products/Edit/Edit";
+import EditBlog from  "../pages/admin/Blogs/Edit/Edit"
 const ROUTES = [
   {
     path: "/",
@@ -92,9 +98,39 @@ const ROUTES = [
     path: "/admin",
     element: <AdminRoot />,
     children: [
+      
       {
         path: "",
-        element: <DashBoard />,
+        element: <AllProducts />,
+      },
+      {
+        path: "products/add",
+        element: <AddProduct/>,
+      },
+      
+      {
+        path: "blogs",
+        element: <AllBlogs />,
+      },
+      {
+        path: "blogs/edit/:id",
+        element: <EditBlog />,
+      },
+      {
+        path: "products/edit/:id",
+        element: <EditProduct />,
+      },
+      {
+        path: "blogs/add",
+        element: <AddBlog />,
+      },
+      {
+        path: "users",
+        element: <AllUsers />,
+      },
+      {
+        path: "users/add",
+        element: <AddUser/>,
       },
     ],
   },

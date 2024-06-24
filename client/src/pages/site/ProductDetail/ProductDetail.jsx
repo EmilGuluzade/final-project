@@ -155,16 +155,7 @@ const ProductDetail = () => {
                     data-placement="top"
                     title="Scroll To Reviews"
                   >
-                    <Rating
-                      readonly={true}
-                      initialValue={product.rating}
-                      size={25}
-                    />
-                    <span className="reviews-link">
-                      <a href="#" className="js-reviews-link">
-                        (17 reviews)
-                      </a>
-                    </span>
+                    <Rating  readonly={true}  initialValue={product.rating}  size={25}  />
                   </div>
                   <h1 className="prd-block_title">{product.title}</h1>
                 </div>

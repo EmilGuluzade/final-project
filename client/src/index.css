@@ -44052,3 +44052,24 @@ body.compensate-for-scrollbar {
     height: 0px;
     width: 30px;
 }
+
+.post-prw-img a {
+height: 100%;
+}
+
+blockquote:after{
+    display: none !important;
+}
+
+
+.adminbg{
+   background-color: #45f3 ; 
+   min-height: 100vh;
+}
+table tr{
+    border: 2px solid #0303 !important;
+}
+
+table{
+    background-color: #45f3;
+}

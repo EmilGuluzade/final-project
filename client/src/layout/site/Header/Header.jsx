@@ -4,26 +4,37 @@ import { Link } from "react-router-dom";
 import MainContext from "../../../context/context";
 import QuickLogin from "../../../components/site/Home/QuickLogin/QuickLogin";
 import { Rating } from "react-simple-star-rating";
+import controller from "../../../services/api/requests";
+import { endpoints } from "../../../services/api/constants";
 
 const Header = () => {
+  const [userInfo, setUserinfo] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isSidebar, setIsSidebar] = useState(false);
   const [isCardBar, setIsCardBar] = useState(false);
   const [isSearch, setIsSearch] = useState(false);
   const [isScroll, setIsScroll] = useState(false);
-  const { basket, user, products } = useContext(MainContext);
-  const [search, setSearch] = useState( );
+  const { basket, user, products, basketCount, basketTotal, wishlistCount } =
+    useContext(MainContext);
+  const [search, setSearch] = useState();
   useEffect(() => {
     const handleScroll = () => {
       const scrollTop = window.scrollY;
       setIsScroll(scrollTop > 400);
     };
-
     window.addEventListener("scroll", handleScroll);
-
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
+  }, []);
+
+  useEffect(() => {
+    async function getUser() {
+      const response = await controller.getOne(endpoints.users, user.id);
+
+      setUserinfo(response.data);
+    }
+    getUser();
   }, []);
 
   return (
@@ -74,7 +85,27 @@ const Header = () => {
                 className="account-link"
                 to="#"
               >
-                <i className="fa-regular fa-user"></i> Account
+                {user.id != null ? (
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <img
+                      src={userInfo && userInfo.src}
+                      width={"25px"}
+                      style={{
+                        objectFit: "cover",
+                        borderRadius: "50%",
+                        marginRight: "10px",
+                        objectPosition: "top",
+                      }}
+                      height={"25px"}
+                      alt=""
+                    />
+                    {userInfo && userInfo.username}
+                  </div>
+                ) : (
+                  <>
+                    <i className="fa-regular fa-user"></i> Account
+                  </>
+                )}
               </Link>
             </div>
           </div>
@@ -179,8 +210,13 @@ const Header = () => {
             </div>
             <ul className="hdr-bottom__right col-lg-4 col-6">
               <li>
-                <Link to="#" onClick={() => {setIsSearch(!isSearch)
-                  setSearch("")}}>
+                <Link
+                  to="#"
+                  onClick={() => {
+                    setIsSearch(!isSearch);
+                    setSearch("");
+                  }}
+                >
                   <i className="fa-thin fa-magnifying-glass"></i>
                 </Link>
               </li>
@@ -188,7 +224,7 @@ const Header = () => {
                 <li>
                   <Link to="/wishlist" className="counter-wrapper">
                     <i className="fa-thin fa-heart"></i>
-                    <div className="counter">2</div>
+                    <div className="counter">{wishlistCount}</div>
                   </Link>
                 </li>
               )}
@@ -207,8 +243,8 @@ const Header = () => {
                     className="counter-wrapper"
                   >
                     <i className="fa-thin fa-basket-shopping"></i>
-                    <div className="total-price">12$</div>
-                    <div className="counter">2</div>
+                    <div className="total-price">{basketTotal}$</div>
+                    <div className="counter">{basketCount}</div>
                   </Link>
                 </li>
               )}
@@ -226,44 +262,61 @@ const Header = () => {
                 onChange={(e) => setSearch(e.target.value)}
               />
               <i
-                onClick={() => {setIsSearch(!isSearch)
-                  setSearch("")}}
+                onClick={() => {
+                  setIsSearch(!isSearch);
+                  setSearch("");
+                }}
                 className="fa-solid fa-x"
               ></i>
             </div>
-            {
-              search && (
-                <div className="container  " style={{zIndex:"300",backgroundColor:"white"}}>
-                <div className="w-100" style={{overflowY:"scroll",overflowX:"hidden",height:"300px"}}>
-                {
-                products.filter(x => x.title.toLowerCase().includes(search.toLowerCase()))
-                  .map((item, index) => (
-                    <Link onClick={()=>setIsSearch(false)}  to={`/product/${item._id}`} key={index} className="prd-crd col-12  d-flex py-3 align-items-center ">
-                      <div className="col-4 ">
-                        <img
-                          width={"60px"}
-                          height="70px"
-                          src={item.images && item.images[0]}
-                          alt=""
-                        />
-                      </div>
-                      <div className="col-6">
-                        <h3 >{item.title} </h3>
-          <Rating readonly={true} initialValue={item.rating} size={20} />
-
-                      </div>
-                      <div className="col-2">
-                        <p>{item.price} $</p>
-                      </div>
-                    </Link>
-                  ))}
+            {search && (
+              <div
+                className="container  "
+                style={{ zIndex: "300", backgroundColor: "white" }}
+              >
+                <div
+                  className="w-100"
+                  style={{
+                    overflowY: "scroll",
+                    overflowX: "hidden",
+                    height: "300px",
+                  }}
+                >
+                  {products
+                    .filter((x) =>
+                      x.title.toLowerCase().includes(search.toLowerCase())
+                    )
+                    .map((item, index) => (
+                      <Link
+                        onClick={() => setIsSearch(false)}
+                        to={`/product/${item._id}`}
+                        key={index}
+                        className="prd-crd col-12  d-flex py-3 align-items-center "
+                      >
+                        <div className="col-4 ">
+                          <img
+                            width={"60px"}
+                            height="70px"
+                            src={item.images && item.images[0]}
+                            alt=""
+                          />
+                        </div>
+                        <div className="col-6">
+                          <h3>{item.title} </h3>
+                          <Rating
+                            readonly={true}
+                            initialValue={item.rating}
+                            size={20}
+                          />
+                        </div>
+                        <div className="col-2">
+                          <p>{item.price} $</p>
+                        </div>
+                      </Link>
+                    ))}
                 </div>
-            
-            </div>
-              )
-              
-            }
-           
+              </div>
+            )}
           </div>
         )}
       </header>
@@ -361,83 +414,52 @@ const Header = () => {
             </span>
           </div>
           <div className="minicart-drop-content js-dropdn-content-scroll ps ps--theme_default">
-            <div className="card-scroll">
+            <div
+              className="card-scroll overflow-y-scroll overflow-x-hidden"
+              style={{ height: "450px" }}
+            >
               {basket.length > 0 ? (
                 <>
-                  <div className="minicart-prd row">
-                    <div className="minicart-prd-image image-hover-scale-circle col">
-                      <a href="product.html">
-                        <img
-                          className="fade-up ls-is-cached lazyloaded"
-                          src="https://big-skins.com/frontend/foxic-html-demo/images/skins/fashion/products/product-01-1.webp"
-                          data-src="images/skins/fashion/products/product-01-1.webp"
-                          alt=""
-                        />
-                      </a>
-                    </div>
-                    <div className="minicart-prd-info col">
-                      <div className="minicart-prd-tag">FOXic</div>
-                      <h2 className="minicart-prd-name">
-                        <a href="#">Leather Pegged Pants</a>
-                      </h2>
-                      <div className="minicart-prd-qty">
-                        <span className="minicart-prd-qty-label">
-                          Quantity:
-                        </span>
-                        <span className="minicart-prd-qty-value">1</span>
+                  {basket.map((item, index) => (
+                    <div className="minicart-prd row">
+                      <div className="minicart-prd-image image-hover-scale-circle col">
+                        <a href="product.html">
+                          <img
+                            className="fade-up ls-is-cached lazyloaded"
+                            src={item.images && item.images[0]}
+                            data-src="images/skins/fashion/products/product-01-1.webp"
+                            alt=""
+                          />
+                        </a>
                       </div>
-                      <div className="minicart-prd-price prd-price">
-                        <div className="price-old">$200.00</div>
-                        <div className="price-new">$180.00</div>
+                      <div className="minicart-prd-info col">
+                        <div className="minicart-prd-tag">{item.brand}</div>
+                        <h2 className="minicart-prd-name">
+                          <Link to={`/product/${item._id}`}>{item.title}</Link>
+                        </h2>
+                        <div className="minicart-prd-qty">
+                          <span className="minicart-prd-qty-label">
+                            Quantity:
+                          </span>
+                          <span className="minicart-prd-qty-value">
+                            {item.count}
+                          </span>
+                        </div>
+                        <div className="minicart-prd-price prd-price">
+                          <div className="price-new">${item.price}</div>
+                        </div>
                       </div>
-                    </div>
-                    <div className="minicart-prd-action">
-                      <a
-                        href="#"
-                        className="js-product-remove"
-                        data-line-number="1"
-                      >
-                        <i className="icon-recycle"></i>
-                      </a>
-                    </div>
-                  </div>
-                  <div className="minicart-prd row">
-                    <div className="minicart-prd-image image-hover-scale-circle col">
-                      <a href="product.html">
-                        <img
-                          className="fade-up ls-is-cached lazyloaded"
-                          src="https://big-skins.com/frontend/foxic-html-demo/images/skins/fashion/products/product-01-1.webp"
-                          data-src="images/skins/fashion/products/product-16-1.webp"
-                          alt=""
-                        />
-                      </a>
-                    </div>
-                    <div className="minicart-prd-info col">
-                      <div className="minicart-prd-tag">FOXic</div>
-                      <h2 className="minicart-prd-name">
-                        <a href="#">Cascade Casual Shirt</a>
-                      </h2>
-                      <div className="minicart-prd-qty">
-                        <span className="minicart-prd-qty-label">
-                          Quantity:
-                        </span>
-                        <span className="minicart-prd-qty-value">1</span>
-                      </div>
-                      <div className="minicart-prd-price prd-price">
-                        <div className="price-old">$200.00</div>
-                        <div className="price-new">$180.00</div>
+                      <div className="minicart-prd-action">
+                        <a
+                          href="#"
+                          className="js-product-remove"
+                          data-line-number="1"
+                        >
+                          <i className="icon-recycle"></i>
+                        </a>
                       </div>
                     </div>
-                    <div className="minicart-prd-action">
-                      <a
-                        href="#"
-                        className="js-product-remove"
-                        data-line-number="2"
-                      >
-                        <i className="icon-recycle"></i>
-                      </a>
-                    </div>
-                  </div>
+                  ))}
                 </>
               ) : (
                 <div className="minicart-empty js-minicart-empty">

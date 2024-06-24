@@ -1,0 +1,110 @@
+.datatable-wrapper {
+  padding: 20px;
+}
+
+.datatable-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.datatable-search input {
+  padding: 5px;
+  font-size: 14px;
+}
+
+.datatable-dropdown select {
+  padding: 5px;
+  font-size: 14px;
+}
+
+.datatable-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.datatable-table th,
+.datatable-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.datatable-table th {
+  background-color: #f2f2f2;
+}
+
+.datatable-pagination {
+  display: flex;
+  justify-content: center;
+}
+
+.datatable-pagination-list {
+  list-style: none;
+  display: flex;
+  padding: 0;
+}
+
+.datatable-pagination-list-item {
+  margin: 0 5px;
+}
+
+.datatable-pagination-list-item-link {
+  text-decoration: none;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  color: #000;
+  cursor: pointer;
+}
+
+.datatable-pagination-list-item-link:hover {
+  background-color: #f2f2f2;
+}
+
+.datatable-active .datatable-pagination-list-item-link {
+  background-color: #007bff;
+  color: #fff;
+  border: 1px solid #007bff;
+}
+
+.datatable-disabled .datatable-pagination-list-item-link {
+  color: #ccc;
+  pointer-events: none;
+}
+
+.datatable-info {
+  text-align: right;
+}
+
+.description {
+  max-height: 100px !important;
+}
+
+.edit-btn {
+  background-color: #346cc7 !important;
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  padding: 12px  15px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-btn {
+  background-color: #c73434 !important;
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.sort-button {
+  border: 0px;
+}
