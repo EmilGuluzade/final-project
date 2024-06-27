@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet-async";
 import BasketItem from "../../../components/site/Cards/BasketItem/BasketItem";
 
 const Basket = () => {
-  const { basket, products,resetBasket } = useContext(MainContext);
+  const { basket, products,resetBasket,basketTotal, } = useContext(MainContext);
   console.log(basket);
   return (
     <>
@@ -71,7 +71,7 @@ const Basket = () => {
                     <div class="row d-flex">
                       <div class="col card-total-txt">Total</div>
                       <div class="col-auto card-total-price text-right">
-                        $ 475.00
+                        $ {basketTotal}
                       </div>
                     </div>
                     <button class="btn btn--full btn--lg">

@@ -37,6 +37,8 @@ const Header = () => {
     getUser();
   }, []);
 
+
+  
   return (
     <>
       <header className="hdr-top">
@@ -111,6 +113,7 @@ const Header = () => {
           </div>
         </div>
       </header>
+
       <header
         className={`hdr-bottom ${isScroll ? "fixed-header" : ""}`}
         style={
@@ -500,7 +503,7 @@ const Header = () => {
                 className="minicart-drop-total-price col"
                 data-header-cart-total=""
               >
-                $340
+                ${basketTotal}
               </div>
             </div>
             <div className="minicart-drop-actions">

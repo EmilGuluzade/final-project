@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./ProductCard.css";
 import { Rating } from "react-simple-star-rating";
 import PrimaryButton from "../../PrimaryButton/PrimaryButton";
 import AOS from "aos";
 import "aos/dist/aos.css";
+import MainContext from "../../../../context/context";
 
 const SliderProductCard = ({data}) => {
-
+  const { addToBasket,toggleWishList,wishlist } = useContext(MainContext);
 
 
   useEffect(() => {
@@ -35,9 +36,20 @@ const SliderProductCard = ({data}) => {
           />
          
             <div className="product-detail">
-              <Link to="#">
-                <i class="fa-thin fa-heart"></i>
-              </Link>
+            <Link to="#" onClick={()=>toggleWishList(data._id)}>
+              <i className={`fa-${
+                  wishlist.some((item) => item._id === data._id)
+                    ? "solid"
+                    : "thin"
+                } fa-heart heart__icon`}
+
+
+                style={{color:`${
+                  wishlist.some((item) => item._id === data._id)
+                    ? "red"
+                    : ""
+                }`}}></i>
+            </Link>
 
               <Link to={`/product/${data._id}`} >
                 <i class="fa-light fa-eye"></i>
@@ -60,9 +72,9 @@ const SliderProductCard = ({data}) => {
               {data.title}
             </Link>
             <div className="button-container" style={{ height: "50px" }}>
-                <PrimaryButton onClick={() => console.log("sa")}>
-                  Add To Basket
-                </PrimaryButton>
+            <PrimaryButton onClick={()=>addToBasket(data._id)}>
+                Add To Basket
+              </PrimaryButton>
                 <p className="product-price">{data.price}$</p>
             </div>
           </div>

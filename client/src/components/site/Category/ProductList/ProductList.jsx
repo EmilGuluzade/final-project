@@ -1,7 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import MainContext from "../../../../context/context";
 import ProductCard from "../../Cards/ProductCard/ProductCard";
-
 const ProductList = () => {
   const { products } = useContext(MainContext);
   const [sortConfig, setSortConfig] = useState({ field: null, asc: null });
@@ -11,7 +10,14 @@ const ProductList = () => {
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [selectedCollections, setSelectedCollections] = useState([]);
-  const [visibleProducts, setVisibleProducts] = useState(8); // Initial number of products to display
+  const [visibleProducts, setVisibleProducts] = useState(8);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(1000);
+  const [priceRange, setPriceRange] = useState([0, 1000]);
+
+  useEffect(() => {
+    setPriceRange([minPrice, maxPrice]);
+  }, [minPrice, maxPrice]);
 
   const handleSortChange = (field, asc) => {
     setSortConfig({
@@ -65,7 +71,7 @@ const ProductList = () => {
   };
 
   const loadMoreProducts = () => {
-    setVisibleProducts((prev) => prev + 8); // Increase the number of visible products by 8
+    setVisibleProducts((prev) => prev + 8);
   };
 
   const filteredProducts = products
@@ -76,7 +82,9 @@ const ProductList = () => {
           (selectedBrands.length === 0 ||
             selectedBrands.includes(product.brand)) &&
           (selectedCollections.length === 0 ||
-            selectedCollections.includes(product.collections))
+            selectedCollections.includes(product.collections)) &&
+          product.price >= priceRange[0] &&
+          product.price <= priceRange[1]
         );
       })
     : [];
@@ -387,59 +395,48 @@ const ProductList = () => {
                     <li>
                       <input
                         type="checkbox"
-                        id="collection-spring"
+                        id="collection-men"
                         name="collection"
-                        value="spring"
-                        checked={selectedCollections.includes("spring")}
+                        value="men"
+                        checked={selectedCollections.includes("men")}
                         onChange={() =>
-                          handleFilterChange("collection", "spring")
+                          handleFilterChange("collection", "men")
                         }
                       />
-                      <label htmlFor="collection-spring">Spring</label>
+                      <label htmlFor="collection-men">Men</label>
                     </li>
                     <li>
                       <input
                         type="checkbox"
-                        id="collection-summer"
+                        id="collection-women"
                         name="collection"
-                        value="summer"
-                        checked={selectedCollections.includes("summer")}
+                        value="women"
+                        checked={selectedCollections.includes("women")}
                         onChange={() =>
-                          handleFilterChange("collection", "summer")
+                          handleFilterChange("collection", "women")
                         }
                       />
-                      <label htmlFor="collection-summer">Summer</label>
+                      <label htmlFor="collection-women">Women</label>
                     </li>
                     <li>
                       <input
                         type="checkbox"
-                        id="collection-fall"
+                        id="collection-accessories"
                         name="collection"
-                        value="fall"
-                        checked={selectedCollections.includes("fall")}
+                        value="accessories"
+                        checked={selectedCollections.includes("accessories")}
                         onChange={() =>
-                          handleFilterChange("collection", "fall")
+                          handleFilterChange("collection", "accessories")
                         }
                       />
-                      <label htmlFor="collection-fall">Fall</label>
-                    </li>
-                    <li>
-                      <input
-                        type="checkbox"
-                        id="collection-winter"
-                        name="collection"
-                        value="winter"
-                        checked={selectedCollections.includes("winter")}
-                        onChange={() =>
-                          handleFilterChange("collection", "winter")
-                        }
-                      />
-                      <label htmlFor="collection-winter">Winter</label>
+                      <label htmlFor="collection-accessories">Accessories</label>
                     </li>
                   </ul>
                 </div>
               )}
             </div>
+
+          
             <a
               href="#"
               className="bnr image-hover-scale bnr--bottom bnr--left fontratio-calc mt-5"

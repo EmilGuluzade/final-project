@@ -44063,13 +44063,146 @@ blockquote:after{
 
 
 .adminbg{
-   background-color: #45f3 ; 
+
    min-height: 100vh;
 }
-table tr{
-    border: 2px solid #0303 !important;
+
+
+
+
+
+
+.cartbar-icon{
+    display:none !important;
 }
 
-table{
-    background-color: #45f3;
+.cartbar-cart:hover~.cartbar-icon{
+display: flex !important;
+}
+
+.or{
+position: relative;
+display: flex;
+align-items: center;
+gap: 10px;
+margin: 30px 0;
+}
+
+.or::after{
+    content: "";
+    height: 1px;
+    width: 100px;
+    background-color: black;display: block;
+}
+.or::before{
+    content: "";
+    height: 1px;
+    width: 100px;
+    background-color: black;display: block;
+}
+
+
+
+
+/* ProductList.css */
+.sidebar-block_content {
+    margin-top: 1rem;
+  }
+  
+  .category-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .category-list li {
+    margin-bottom: 0.5rem;
+  }
+  
+  .category-list input[type="checkbox"] {
+    margin-right: 0.5rem;
+  }
+  
+  .bnr.image-hover-scale {
+    display: block;
+    overflow: hidden;
+  }
+  
+  .bnr.image-hover-scale .bnr-img {
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .bnr.image-hover-scale:hover .bnr-img {
+    transform: scale(1.1);
+  }
+  
+  .sidebar-block_title {
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+  }
+  
+  .sidebar-block_title .toggle-arrow span {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-left: 1px solid #000;
+    border-bottom: 1px solid #000;
+    transform: rotate(45deg);
+    margin-left: 5px;
+    transition: transform 0.3s ease;
+  }
+  
+  .sidebar-block_title .toggle-arrow span:last-child {
+    transform: rotate(45deg);
+    margin-left: 0px;
+    margin-top: -5px;
+
+  }
+  .sidebar-block_title .toggle-arrow span:first-child {
+    transform: rotate(45deg);
+    
+  }
+  
+  .filter-group-block.collapsed .sidebar-block_content {
+    display: none;
+  }
+  
+  .filter-group-block.collapsed .toggle-arrow span:first-child {
+    transform: rotate(-90deg);
+  }
+  
+  .filter-group-block.collapsed .toggle-arrow span:last-child {
+    transform: rotate(-90deg);
+    margin-left: 0px;
+  }
+  
+  .load-more-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+
+  .price-range {
+    display: flex;
+    align-items: center;
+  }
+  
+  .price-range input[type="range"] {
+    width: calc(50% );
+    margin: -5px;
+  }
+  
+  .price-range-values {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  .product-title 
+{
+    text-align: center;
 }

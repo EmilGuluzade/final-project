@@ -9,8 +9,8 @@ import MainContext from "./context/context";
 import Swal from "sweetalert2";
 import controller from "./services/api/requests";
 import { endpoints } from "./services/api/constants";
-import "toastify-js/src/toastify.css"
-import Toastify from 'toastify-js'
+import "toastify-js/src/toastify.css";
+import Toastify from "toastify-js";
 import Aos from "aos";
 import "aos/dist/aos.css";
 function App() {
@@ -20,9 +20,9 @@ function App() {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("user")));
   const [products, setProducts] = useState([]);
   const [blogs, setBlogs] = useState([]);
-  const [basketCount,setBasketCount]=useState(0)
-  const [wishlistCount,setWishlistCount]=useState(0)
-  const [basketTotal,setBasketTotal]=useState(0)
+  const [basketCount, setBasketCount] = useState(0);
+  const [wishlistCount, setWishlistCount] = useState(0);
+  const [basketTotal, setBasketTotal] = useState(0);
   const [basket, setBasket] = useState(
     localStorage.getItem("basket")
       ? JSON.parse(localStorage.getItem("basket"))
@@ -37,11 +37,9 @@ function App() {
   useEffect(() => {
     localStorage.setItem("basket", JSON.stringify(basket));
     localStorage.setItem("wishlist", JSON.stringify(wishlist));
-    setBasketCount(basket.reduce((sum,acc)=>sum+acc.count,0))
-    setWishlistCount(wishlist.reduce((sum,acc)=>sum+1,0))
-    setBasketTotal(basket.reduce((sum,acc)=>sum+acc.totalPrice,0))
-
-
+    setBasketCount(basket.reduce((sum, acc) => sum + acc.count, 0));
+    setWishlistCount(wishlist.reduce((sum, acc) => sum + 1, 0));
+    setBasketTotal(basket.reduce((sum, acc) => sum + acc.totalPrice, 0));
   }, [basket, wishlist]);
 
   function addToBasket(id) {
@@ -61,11 +59,8 @@ function App() {
         className: "info",
         style: {
           background: "#17c6aa",
-
-
-        }
+        },
       }).showToast();
-    
     } else {
       basketItem.count += 1;
       basketItem.totalPrice += basketItem.price;
@@ -75,10 +70,8 @@ function App() {
         className: "info",
         style: {
           background: "#17c6aa",
-
-        }
+        },
       }).showToast();
-    
     }
   }
 
@@ -93,8 +86,7 @@ function App() {
         className: "info",
         style: {
           background: "#17c6aa",
-
-        }
+        },
       }).showToast();
     } else {
       setWishlist([...wishlist.filter((x) => x._id != id)]);
@@ -103,10 +95,8 @@ function App() {
         className: "info",
         style: {
           background: "#17c6aa",
-
-        }
+        },
       }).showToast();
-    
     }
   }
 
@@ -119,10 +109,8 @@ function App() {
         className: "info",
         style: {
           background: "#17c6aa",
-
-        }
+        },
       }).showToast();
-    
     } else {
       target.count -= 1;
       target.totalPrice -= target.price;
@@ -132,8 +120,7 @@ function App() {
         className: "info",
         style: {
           background: "#17c6aa",
-
-        }
+        },
       }).showToast();
     }
   }
@@ -147,8 +134,7 @@ function App() {
       className: "info",
       style: {
         background: "#17c6aa",
-
-      }
+      },
     }).showToast();
   }
 
@@ -164,7 +150,7 @@ function App() {
         })
       );
     }
-  }, []);
+  }, [user]);
   useEffect(() => {
     async function getAll() {
       const resPro = await controller.getAll(endpoints.products);
@@ -211,6 +197,27 @@ function App() {
     });
   }
 
+
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     try {
+  //       const response = await axios.get("http://localhost:8080/api/login/success");
+
+  //       if (response.status === 200) {
+  //         console.log(response.data.user); // Assuming response.data contains user object
+  //         setUser(response.data.user); // Update user state with user data
+  //       } else {
+  //         throw new Error("Authentication failed");
+  //       }
+  //     } catch (error) {
+  //       console.error("Fetch error:", error);
+  //       // Handle error (e.g., show an error message)
+  //     }
+  //   };
+
+  //   getUser();
+  // }, []); 
+
   const contextData = {
     basket,
     setBasket,
@@ -232,16 +239,14 @@ function App() {
     wishlist,
     basketCount,
     wishlistCount,
-    basketTotal
+    basketTotal,
   };
 
-
   useEffect(() => {
-
     if (window.innerWidth < 768) {
-      const aosElements = document.querySelectorAll('[data-aos]');
-      aosElements.forEach(el => {
-        el.removeAttribute('data-aos');
+      const aosElements = document.querySelectorAll("[data-aos]");
+      aosElements.forEach((el) => {
+        el.removeAttribute("data-aos");
       });
     }
   }, []);

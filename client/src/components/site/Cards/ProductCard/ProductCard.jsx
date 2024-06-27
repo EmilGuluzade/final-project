@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./ProductCard.css";
 import { Rating } from "react-simple-star-rating";
@@ -9,7 +9,7 @@ import MainContext from "../../../../context/context";
 
 const ProductCard = ({ data }) => {
   const navigate = useNavigate();
-  const { addToBasket,toggleWishList } = useContext(MainContext);
+  const { addToBasket, toggleWishList, wishlist } = useContext(MainContext);
 
   useEffect(() => {
     AOS.init({
@@ -19,20 +19,36 @@ const ProductCard = ({ data }) => {
     });
   }, []);
 
-  
-
   return (
     <div data-aos="fade-right" className="col-lg-3 col-md-4 col-sm-6 px-3">
       <div className="product__card">
-        <Link  className="product__card-hdr">
+        <Link className="product__card-hdr">
           <img
             src={data.images[0]}
             alt=""
             style={{ width: "100%", height: "300px", objectFit: "cover" }}
           />
           <div className="product-detail">
-            <Link to="#" onClick={()=>toggleWishList(data._id)}>
-              <i className="fa-thin fa-heart"></i>
+            <Link
+              to="#"
+              onClick={() => {
+                toggleWishList(data._id);
+              }}
+            >
+              <i
+                className={`fa-${
+                  wishlist.some((item) => item._id === data._id)
+                    ? "solid"
+                    : "thin"
+                } fa-heart heart__icon`}
+
+
+                style={{color:`${
+                  wishlist.some((item) => item._id === data._id)
+                    ? "red"
+                    : ""
+                }`}}
+              ></i>
             </Link>
             <Link to={`/product/${data._id}`}>
               <i className="fa-light fa-eye"></i>
@@ -52,7 +68,7 @@ const ProductCard = ({ data }) => {
               {data.title}
             </Link>
             <div className="button-container" style={{ height: "50px" }}>
-              <PrimaryButton onClick={()=>addToBasket(data._id)}>
+              <PrimaryButton onClick={() => addToBasket(data._id)}>
                 Add To Basket
               </PrimaryButton>
               <p className="product-price">{data.price}$</p>

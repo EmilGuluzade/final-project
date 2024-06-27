@@ -61,6 +61,11 @@ const QuickLogin = ({ isOpen, setIsOpen }) => {
       }
     },
   });
+
+  // function googleLogout() {
+  //   logout()
+  //   window.open("http://localhost:8080/api/logout","_self")
+  // }
   return (
     <div
       className={`dropdn-content account-drop quicklogin-wrapper ${

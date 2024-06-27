@@ -24,10 +24,11 @@ import SiteRoot from "../pages/site/SiteRoot";
 import Wishlist from "../pages/site/Wishlist/Wishlist";
 import EditProduct from "../pages/admin/Products/Edit/Edit";
 import EditBlog from  "../pages/admin/Blogs/Edit/Edit"
+import ScrollToTop from "../components/site/ScrollToTop/ScrollToTop";
 const ROUTES = [
   {
     path: "/",
-    element: <SiteRoot />,
+    element: <ScrollToTop><SiteRoot /></ScrollToTop> ,
     children: [
       {
         path: "",
