@@ -26,7 +26,7 @@
         if (!req.isAuthenticated()) {
           return res.redirect('/');
         }
-        res.send(`Merhaba ${req.user.username}`);
+        res.send(req.user);
       });
 
     app.use(router.blog)

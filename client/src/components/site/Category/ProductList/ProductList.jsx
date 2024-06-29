@@ -1,6 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import MainContext from "../../../../context/context";
 import ProductCard from "../../Cards/ProductCard/ProductCard";
+
+import "./ProductList.scss";
 const ProductList = () => {
   const { products } = useContext(MainContext);
   const [sortConfig, setSortConfig] = useState({ field: null, asc: null });
@@ -399,9 +401,7 @@ const ProductList = () => {
                         name="collection"
                         value="men"
                         checked={selectedCollections.includes("men")}
-                        onChange={() =>
-                          handleFilterChange("collection", "men")
-                        }
+                        onChange={() => handleFilterChange("collection", "men")}
                       />
                       <label htmlFor="collection-men">Men</label>
                     </li>
@@ -429,14 +429,58 @@ const ProductList = () => {
                           handleFilterChange("collection", "accessories")
                         }
                       />
-                      <label htmlFor="collection-accessories">Accessories</label>
+                      <label htmlFor="collection-accessories">
+                        Accessories
+                      </label>
                     </li>
                   </ul>
                 </div>
               )}
             </div>
+            <div class="shop__filter__price">
+            <div
+                className="sidebar-block_title"
+                onClick={() => setCollectionsOpen(!collectionsOpen)}
+              >
+                <span>Price Range</span>
+                
+              </div>
+              <div class="shop__filter__price__display">
+                <div class="slider">
+                  <div class="progress"></div>
+                </div>
+                <div class="range-input">
+                  <input
+                    type="range"
+                    min="0"
+                    max="1000"
+                    value={minPrice}
+                    onChange={(e) => setMinPrice(Number(e.target.value))}
+                    class="min-range"
+                  />
+                  <input
+                    type="range"
+                    min="0"
+                    max="1000"
+                    value={maxPrice}
+                    onChange={(e) => setMaxPrice(Number(e.target.value))}
+                    class="max-range"
+                  />
+                </div>
+                <div class="price-input">
+                  <div class="field">
+                    <span>Min</span>
+                    <input type="number" value={minPrice} class="min-input" />
+                  </div>
+                  <div class="seperator">-</div>
+                  <div class="field">
+                    <span>Max</span>
+                    <input type="number" value={maxPrice} class="max-input" />
+                  </div>
+                </div>
+              </div>
+            </div>
 
-          
             <a
               href="#"
               className="bnr image-hover-scale bnr--bottom bnr--left fontratio-calc mt-5"

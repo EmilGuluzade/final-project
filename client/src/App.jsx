@@ -34,6 +34,16 @@ function App() {
       : []
   );
 
+  // useEffect(() => {
+  //   axios.get('http://localhost:8080/api/profile')
+  //     .then(response => {
+  //       setUser(response.data);
+  //     })
+  //     .catch(error => {
+  //       console.log('Not authenticated');
+  //       window.location.href = '/';
+  //     });
+  // }, []);
   useEffect(() => {
     localStorage.setItem("basket", JSON.stringify(basket));
     localStorage.setItem("wishlist", JSON.stringify(wishlist));
@@ -196,27 +206,24 @@ function App() {
       timer: 1000,
     });
   }
-
-
-  // useEffect(() => {
-  //   const getUser = async () => {
-  //     try {
-  //       const response = await axios.get("http://localhost:8080/api/login/success");
-
-  //       if (response.status === 200) {
-  //         console.log(response.data.user); // Assuming response.data contains user object
-  //         setUser(response.data.user); // Update user state with user data
-  //       } else {
-  //         throw new Error("Authentication failed");
-  //       }
-  //     } catch (error) {
-  //       console.error("Fetch error:", error);
-  //       // Handle error (e.g., show an error message)
-  //     }
-  //   };
-
-  //   getUser();
-  // }, []); 
+    const getUser = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/api/profile");
+  
+        if (response.status === 200) {
+          console.log(response.data.user); 
+          setUser(response.data.user);
+        } else {
+          throw new Error("Authentication failed");
+        }
+      } catch (error) {
+        console.error("Fetch error:", error);
+        window.location.href = '/login';
+      }
+    };
+  
+    
+  
 
   const contextData = {
     basket,
@@ -240,6 +247,8 @@ function App() {
     basketCount,
     wishlistCount,
     basketTotal,
+    getUser
+ 
   };
 
   useEffect(() => {

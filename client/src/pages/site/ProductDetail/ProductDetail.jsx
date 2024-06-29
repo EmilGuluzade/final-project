@@ -12,6 +12,9 @@ import SliderProductCard from "../../../components/site/Cards/ProductCard/Slider
 import AOS from "aos";
 import "aos/dist/aos.css";
 import MainContext from "../../../context/context";
+
+import "toastify-js/src/toastify.css";
+import Toastify from "toastify-js";
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
   return (
@@ -36,10 +39,13 @@ function SamplePrevArrow(props) {
 }
 
 const ProductDetail = () => {
+  const {products,basket,setBasket}=useContext(MainContext)
+
   const { id } = useParams();
   const [countdownTime, setCountdownTime] = useState("05:08:03");
   const [deliveryDate, setDeliveryDate] = useState("Tuesday, July 22, 2024");
   const [product, setProduct] = useState({});
+  const [quantity,setQuantity]=useState(1)
 
   useEffect(() => {
     async function getSingleProduct() {
@@ -93,7 +99,6 @@ const ProductDetail = () => {
     },
   ];
 
-  const { products } = useContext(MainContext);
 
   const slider = React.useRef(null);
   var settings = {
@@ -141,6 +146,40 @@ const ProductDetail = () => {
     });
   }, []);
 
+
+  function addToBasket(e,id) {
+    e.preventDefault();
+    let basketItem = basket.find((x) => x._id == id);
+
+    if (!basketItem) {
+      let target = products.find((x) => x._id == id);
+
+      let newItem = {
+        ...target,
+        count: quantity,
+        totalPrice: target.price * quantity,
+      };
+      setBasket([...basket, newItem]);
+      Toastify({
+        text: "Item Added to basket!",
+        className: "info",
+        style: {
+          background: "#17c6aa",
+        },
+      }).showToast();
+    } else {
+      basketItem.count += quantity;
+      basketItem.totalPrice += basketItem.price * quantity;
+      setBasket([...basket]);
+      Toastify({
+        text: "Item Added to basket!",
+        className: "info",
+        style: {
+          background: "#17c6aa",
+        },
+      }).showToast();
+    }
+  }
   return (
     <>
       <div className="holder">
@@ -292,11 +331,13 @@ const ProductDetail = () => {
                   </div>
                 </div>
                 <div className=" order-md-100">
-                  <form method="post" action="#">
+                  <form method="post" >
                     <div className="prd-block_actions prd-block_actions--wishlist">
                       <div className="prd-block_qty">
                         <div className="qty qty-changer">
                           <button
+                          onClick={()=>setQuantity(quantity-1)}
+
                             className="decrease js-qty-button"
                             type="button"
                           ></button>
@@ -307,8 +348,10 @@ const ProductDetail = () => {
                             defaultValue="1"
                             min="1"
                             max="1000"
+                            value={quantity}
                           />
                           <button
+                          onClick={()=>setQuantity(quantity+1)}
                             className="increase js-qty-button"
                             type="button"
                           ></button>
@@ -316,8 +359,9 @@ const ProductDetail = () => {
                       </div>
                       <div className="btn-wrap">
                         <button
-                          className="btn btn--add-to-cart js-trigger-addtocart js-prd-addtocart"
-                          data-product='{ "name": "Leather Pegged Pants", "url": "product.html", "path": "images/skins/fashion/product-page/product-01.webp", "aspect_ratio": "0.78" }'
+                        onClick={(e)=>addToBasket(e,id)}
+                          className="btn  "
+     
                         >
                           Add to cart
                         </button>

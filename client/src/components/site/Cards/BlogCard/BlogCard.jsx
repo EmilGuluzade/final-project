@@ -1,7 +1,7 @@
 import { ListItem } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
-
+import moment from "moment";
 const BlogCard = ({data}) => {
   return (
     <div class="post-prw">
@@ -19,7 +19,7 @@ const BlogCard = ({data}) => {
       <div class="post-prw-text col-lg-6 ">
         <div class="post-prw-links">
           <div class="post-prw-date">
-            <i class="icon-calendar"></i>{data.createdAt}
+            <i class="icon-calendar"></i>{moment(data.createdAt).format("LLL")}
           </div>
           <div class="post-prw-date">
             <i class="icon-chat"></i>{data.comments?.length} comments

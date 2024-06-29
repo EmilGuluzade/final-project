@@ -139,7 +139,8 @@ const Header = () => {
             <div className="hdr-bottom__nav col-lg-4">
               <ul>
                 <li>
-                  <Link onClick={() => setIsOpen(false)} to="/">
+                  <Link onClick={() => {setIsOpen(false)
+                  setIsCardBar(false)}} to="/">
                     Home
                   </Link>
                 </li>
@@ -149,12 +150,14 @@ const Header = () => {
                   </Link>
                   <ul className="pages_dropdown">
                     <li>
-                      <Link onClick={() => setIsOpen(false)} to="/category">
+                      <Link onClick={() => {setIsOpen(false)
+                  setIsCardBar(false)}} to="/category">
                         Category
                       </Link>
                     </li>
                     <li>
-                      <Link onClick={() => setIsOpen(false)} to="/gallery">
+                      <Link onClick={() => {setIsOpen(false)
+                  setIsCardBar(false)}}to="/gallery">
                         Gallery
                       </Link>
                     </li>
@@ -163,24 +166,28 @@ const Header = () => {
                       <>
                         <li>
                           <Link
-                            onClick={() => setIsOpen(false)}
+                            onClick={() => {setIsOpen(false)
+                              setIsCardBar(false)}}
                             to="/accountdetails"
                           >
                             Account
                           </Link>
                         </li>
                         <li>
-                          <Link onClick={() => setIsOpen(false)} to="/basket">
+                          <Link onClick={() => {setIsOpen(false)
+                  setIsCardBar(false)}} to="/basket">
                             Cart
                           </Link>
                         </li>
                         <li>
-                          <Link onClick={() => setIsOpen(false)} to="/checkout">
+                          <Link onClick={() => {setIsOpen(false)
+                  setIsCardBar(false)}} to="/checkout">
                             Checkout
                           </Link>
                         </li>
                         <li>
-                          <Link onClick={() => setIsOpen(false)} to="/wishlist">
+                          <Link onClick={() => {setIsOpen(false)
+                  setIsCardBar(false)}} to="/wishlist">
                             Wishlist
                           </Link>
                         </li>
@@ -188,24 +195,28 @@ const Header = () => {
                     )}
 
                     <li>
-                      <Link onClick={() => setIsOpen(false)} to="/faq">
+                      <Link onClick={() => {setIsOpen(false)
+                  setIsCardBar(false)}} to="/faq">
                         FAQ
                       </Link>
                     </li>
                   </ul>
                 </li>
                 <li>
-                  <Link onClick={() => setIsOpen(false)} to="/about">
+                  <Link onClick={() => {setIsOpen(false)
+                  setIsCardBar(false)}} to="/about">
                     About
                   </Link>
                 </li>
                 <li>
-                  <Link onClick={() => setIsOpen(false)} to="/blog">
+                  <Link onClick={() => {setIsOpen(false)
+                  setIsCardBar(false)}} to="/blog">
                     Blog
                   </Link>
                 </li>
                 <li>
-                  <Link onClick={() => setIsOpen(false)} to="/contact">
+                  <Link onClick={() => {setIsOpen(false)
+                  setIsCardBar(false)}}  to="/contact">
                     Contact
                   </Link>
                 </li>
@@ -438,7 +449,7 @@ const Header = () => {
                       <div className="minicart-prd-info col">
                         <div className="minicart-prd-tag">{item.brand}</div>
                         <h2 className="minicart-prd-name">
-                          <Link to={`/product/${item._id}`}>{item.title}</Link>
+                          <Link to={`/product/${item._id}`}   onClick={() => setIsCardBar(false)}>{item.title}</Link>
                         </h2>
                         <div className="minicart-prd-qty">
                           <span className="minicart-prd-qty-label">
@@ -509,11 +520,11 @@ const Header = () => {
             <div className="minicart-drop-actions">
               <Link to="/basket" className="btn btn--md btn--grey">
                 <i className="icon-basket"></i>
-                <span>Cart Page</span>
+                <span   onClick={() => setIsCardBar(false)} >Cart Page</span>
               </Link>
               <Link to="/checkout" className="btn btn--md">
                 <i className="icon-checkout"></i>
-                <span>Check out</span>
+                <span   onClick={() => setIsCardBar(false)}>Check out</span>
               </Link>
             </div>
             <ul className="payment-link mb-2">

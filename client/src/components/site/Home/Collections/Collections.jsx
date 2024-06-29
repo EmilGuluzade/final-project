@@ -6,6 +6,9 @@ import SliderProductCard from '../../Cards/ProductCard/SliderProductCard';
 import AOS from "aos";
 import "aos/dist/aos.css";
 import MainContext from '../../../../context/context';
+
+import "toastify-js/src/toastify.css";
+import Toastify from "toastify-js";
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
   return (
@@ -29,9 +32,9 @@ function SamplePrevArrow(props) {
   );
 }
 const Collections = () => {
-  const {products}=useContext(MainContext)
+  const {products,basket,setBasket}=useContext(MainContext)
 const [collection,setCollection]=useState("women")
-
+const [quantity,setQuantity]=useState(1)
   const slider = React.useRef(null);
   var settings = {
    
@@ -83,6 +86,39 @@ const [collection,setCollection]=useState("women")
 
 
 
+  function addToBasket(id) {
+    let basketItem = basket.find((x) => x._id == id);
+
+    if (!basketItem) {
+      let target = products.find((x) => x._id == id);
+
+      let newItem = {
+        ...target,
+        count: quantity,
+        totalPrice: target.price,
+      };
+      setBasket([...basket, newItem]);
+      Toastify({
+        text: "Item Added to basket!",
+        className: "info",
+        style: {
+          background: "#17c6aa",
+        },
+      }).showToast();
+    } else {
+      basketItem.count += quantity;
+      basketItem.totalPrice += basketItem.price;
+      setBasket([...basket]);
+      Toastify({
+        text: "Item Added to basket!",
+        className: "info",
+        style: {
+          background: "#17c6aa",
+        },
+      }).showToast();
+    }
+  }
+
   return (
     <section  className='collection holder'>
     <div className="container"> 
@@ -126,7 +162,7 @@ const [collection,setCollection]=useState("women")
 <div className="row">
 
 <Slider ref={slider} {...settings}>
-
+                              
 {
   products && products.filter(x=>x.collections==collection).map((item,index)=>(
     <SliderProductCard key={index} data={item} ></SliderProductCard>

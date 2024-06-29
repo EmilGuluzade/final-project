@@ -12,7 +12,7 @@
   import axios from "axios";
 import GoogleButton from 'react-google-button'
   const Login = () => {
-    const { login } = useContext(MainContext);
+    const { login,getUser } = useContext(MainContext);
     const navigate = useNavigate();
     const formik = useFormik({
       initialValues: {
@@ -67,20 +67,11 @@ import GoogleButton from 'react-google-button'
 
     const handleGoogleLogin =async  () => {
       // Google OAuth ile giriş yapmak için yönlendirme sağlayacağız
-      window.location.href =  'http://localhost:8080/api/users/auth/google'
-      loginWithGoogle()
+      window.location.href = 'http://localhost:8080/api/users/auth/google'
+      // getUser()
+      
     };
-    const loginWithGoogle = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/api/users/auth/google/callback"`);
-        // response.data içinde kullanıcı bilgileri olacak, bunları localStorage'e kaydedebilirsiniz
-        localStorage.setItem('user', JSON.stringify(response.data));
-        return response.data;
-      } catch (error) {
-        console.error('Google login error:', error);
-        throw error;
-      }
-    };
+  
     return (
       <div className="page-content" style={{ minHeight: "1.8px" }}>
       <Helmet>
@@ -141,7 +132,9 @@ import GoogleButton from 'react-google-button'
                       or
                      </div>
                       <GoogleButton
-  onClick={handleGoogleLogin}
+  onClick={ ()=>{
+  handleGoogleLogin()
+  }}
 />
                     </div>
                   </form>
