@@ -22,7 +22,8 @@ const Home = () => {
       <Collections></Collections>
       <Trends></Trends>
       <NewArrival></NewArrival>
-      <LatestBlog></LatestBlog></>)
+      <LatestBlog></LatestBlog>
+      </>)
       }
     </>
   )

@@ -73,14 +73,49 @@ const user_controller = {
   },
   update: async (req, res) => {
     const { id } = req.params;
+    const { username, email } = req.body;
+
     try {
-      const response = await UserModel.findByIdAndUpdate(id, req.body, {
-        new: true,
-      });
-      if (response) {
+      // Check for duplicate username and email, excluding the current user
+      const [duplicateUserName, duplicateUserEmail] = await Promise.all([
+        UserModel.findOne({ username, _id: { $ne: id } }),
+        UserModel.findOne({ email, _id: { $ne: id } }),
+      ]);
+
+      let message = "";
+
+      if (duplicateUserName) {
+        message = "username already exists";
+      }
+
+      if (duplicateUserEmail) {
+        message = "email already exists";
+      }
+
+      if (message) {
+        return res.status(400).json({
+          message: message,
+          error: true,
+        });
+      }
+
+      // Prepare the update object
+      const updateData = {
+        username,
+        email,
+      };
+
+      if (req.file) {
+        updateData.src = `http://localhost:8080/api/uploads/${req.file.filename}`;
+      }
+
+      // Update user and return the new user object
+      const updatedUser = await UserModel.findByIdAndUpdate(id, updateData, { new: true });
+
+      if (updatedUser) {
         res.status(200).json({
           message: "updated",
-          data: response,
+          data: updatedUser,
         });
       } else {
         res.status(404).json({
@@ -93,6 +128,36 @@ const user_controller = {
         message: "server error",
         error: error.message,
       });
+    }
+  },
+   changePassword: async (req, res) => {
+    const { id } = req.params;
+    const { currentPassword, newPassword } = req.body;
+
+    try {
+      const user = await UserModel.findById(id);
+
+      if (!user) {
+        return res.status(404).send({ message: "User not found" });
+      }
+
+      const isMatch = await bcrypt.compare(currentPassword, user.password);
+
+      if (!isMatch) {
+        return res.status(400).send({ message: "Current password is incorrect" });
+      }
+
+      const saltRounds = 10;
+      const salt = await bcrypt.genSalt(saltRounds);
+      const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+      user.password = hashedPassword;
+      await user.save();
+
+      res.status(200).send({ message: "Password changed successfully" });
+    } catch (error) {
+      console.error("Change password error:", error);
+      res.status(500).send({ message: "An error occurred while changing password" });
     }
   },
   register: async (req, res) => {

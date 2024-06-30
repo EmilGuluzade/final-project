@@ -35,7 +35,7 @@ const Header = () => {
       setUserinfo(response.data);
     }
     getUser();
-  }, []);
+  }, [user]);
 
 
   

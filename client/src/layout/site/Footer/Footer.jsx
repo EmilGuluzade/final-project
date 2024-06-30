@@ -4,21 +4,21 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { Link } from "react-router-dom";
 const Footer = () => {
-  useEffect(() => {
-    AOS.init({
-      disable: "phone",
-      duration: 900,
-      easing: "ease-out-cubic",
-    });
-  }, []);
+  // useEffect(() => {
+  //   AOS.init({
+  //     disable: "phone",
+  //     duration: 900,
+  //     easing: "ease-out-cubic",
+  //   });
+  // }, []);
 
   return (
     <footer className="page-footer footer-style-6">
-      <div className="holder">
+      {/* <div className="holder">
         <div className="footer-shop-info">
           <div className="container">
             <div className="text-icn-blocks-bg-row d-flex flex-wrap">
-              <div className="text-icn-block-footer" data-aos="fade-up">
+              <div className="text-icn-block-footer" >
                 <div className="icn">
                   <i className="fa-regular fa-cart-flatbed-boxes"></i>
                 </div>
@@ -30,7 +30,7 @@ const Footer = () => {
                   </p>
                 </div>
               </div>
-              <div className="text-icn-block-footer" data-aos="fade-up">
+              <div className="text-icn-block-footer" >
                 <div className="icn">
                   <i className="fa-sharp fa-regular fa-coins"></i>
                 </div>
@@ -42,7 +42,7 @@ const Footer = () => {
                   </p>
                 </div>
               </div>
-              <div className="text-icn-block-footer" data-aos="fade-up">
+              <div className="text-icn-block-footer">
                 <div className="icn">
                   <i className="fa-sharp fa-solid fa-file-certificate"></i>
                 </div>
@@ -57,7 +57,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="footer2">
         <div className="container">
           <div className="foxic-footer">

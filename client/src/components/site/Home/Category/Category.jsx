@@ -28,7 +28,7 @@ const Category = () => {
       <div class="holder holder-mt-xsmall">
         <div class="container">
           <div class="row vert-margin-small">
-            <div class="col-sm " data-aos="fade-right">
+            <div class="col-sm " data-aos="fade-up">
               <Link
                 to="/category"
                 class="collection-grid-3-item image-hover-scale "
@@ -53,7 +53,7 @@ const Category = () => {
                 </div>
               </Link>
             </div>
-            <div class="col-sm " data-aos="fade-left">
+            <div class="col-sm " data-aos="fade-up">
               <Link
                 to="/category"
                 class="collection-grid-3-item image-hover-scale "

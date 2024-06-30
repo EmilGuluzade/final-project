@@ -54,7 +54,7 @@ async function patch(endpoint, id, payload) {
     const response = await axios.patch(BASE_URL + endpoint + `/${id}`, payload);
     return response.data;
   } catch (error) {
-    return error;
+    return error
   }
 }
 

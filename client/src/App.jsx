@@ -147,7 +147,17 @@ function App() {
       },
     }).showToast();
   }
+  useEffect(() => {
+    async function getAll() {
+      const resPro = await controller.getAll(endpoints.products);
+      const resblog = await controller.getAll(endpoints.blogs);
+      setBlogs(resblog.data);
+      setProducts(resPro.data);
+      setLoading(false);
+    }
 
+    getAll();
+  }, []);
   useEffect(() => {
     if (!localStorage.getItem("user")) {
       localStorage.setItem(
@@ -161,17 +171,7 @@ function App() {
       );
     }
   }, [user]);
-  useEffect(() => {
-    async function getAll() {
-      const resPro = await controller.getAll(endpoints.products);
-      const resblog = await controller.getAll(endpoints.blogs);
-      setBlogs(resblog.data);
-      setProducts(resPro.data);
-      setLoading(false);
-    }
 
-    getAll();
-  }, []);
 
   function login(user) {
     localStorage.setItem(
