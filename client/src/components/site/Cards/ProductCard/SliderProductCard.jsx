@@ -21,7 +21,7 @@ const SliderProductCard = ({data}) => {
 
   return (
     <div
-      data-aos="fade-right"
+      
      
       className="px-3 "
     >

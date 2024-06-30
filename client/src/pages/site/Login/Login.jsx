@@ -128,14 +128,14 @@ import GoogleButton from 'react-google-button'
                       <button className="btn" type="submit">
                         Sigh in 
                       </button>
-                     <div className="or">
+                     {/* <div className="or">
                       or
                      </div>
                       <GoogleButton
   onClick={ ()=>{
   handleGoogleLogin()
   }}
-/>
+/> */}
                     </div>
                   </form>
                 </div>

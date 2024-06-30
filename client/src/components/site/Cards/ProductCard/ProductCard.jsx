@@ -20,7 +20,7 @@ const ProductCard = ({ data }) => {
   }, []);
 
   return (
-    <div data-aos="fade-right" className="col-lg-3 col-md-4 col-sm-6 px-3">
+    <div  className="col-lg-3 col-md-4 col-sm-6 px-3">
       <div className="product__card">
         <Link className="product__card-hdr">
           <img

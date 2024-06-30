@@ -28,7 +28,7 @@ const Category = () => {
       <div class="holder holder-mt-xsmall">
         <div class="container">
           <div class="row vert-margin-small">
-            <div class="col-sm " data-aos="fade-up">
+            <div class="col-sm " >
               <Link
                 to="/category"
                 class="collection-grid-3-item image-hover-scale "
@@ -53,7 +53,7 @@ const Category = () => {
                 </div>
               </Link>
             </div>
-            <div class="col-sm " data-aos="fade-up">
+            <div class="col-sm ">
               <Link
                 to="/category"
                 class="collection-grid-3-item image-hover-scale "
@@ -84,7 +84,7 @@ const Category = () => {
       <div class="holder holder-mt-medium">
         <div class="container">
           <ul class="brand-grid flex-wrap justify-content- js-color-hover-brand-grid">
-            <li data-aos="fade-up">
+            <li >
               <a
                 href="#"
                 target="_self"
@@ -99,7 +99,7 @@ const Category = () => {
                 />
               </a>
             </li>
-            <li data-aos="fade-up">
+            <li >
               <a
                 href="#"
                 target="_self"
@@ -114,7 +114,7 @@ const Category = () => {
                 />
               </a>
             </li>
-            <li data-aos="fade-up">
+            <li >
               <a
                 href="#"
                 target="_self"
@@ -129,7 +129,7 @@ const Category = () => {
                 />
               </a>
             </li>
-            <li data-aos="fade-up">
+            <li>
               <a
                 href="#"
                 target="_self"
@@ -144,7 +144,7 @@ const Category = () => {
                 />
               </a>
             </li>
-            <li class="js-hidden" data-aos="fade-up">
+            <li class="js-hidden" >
               <a
                 href="#"
                 target="_self"
@@ -159,7 +159,7 @@ const Category = () => {
                 />
               </a>
             </li>
-            <li class="js-hidden" data-aos="fade-up">
+            <li class="js-hidden" >
               <a
                 href="#"
                 target="_self"

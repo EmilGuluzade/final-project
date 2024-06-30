@@ -39,13 +39,13 @@ function SamplePrevArrow(props) {
 }
 
 const ProductDetail = () => {
-  const {products,basket,setBasket}=useContext(MainContext)
+  const { products, basket, setBasket } = useContext(MainContext);
 
   const { id } = useParams();
   const [countdownTime, setCountdownTime] = useState("05:08:03");
   const [deliveryDate, setDeliveryDate] = useState("Tuesday, July 22, 2024");
   const [product, setProduct] = useState({});
-  const [quantity,setQuantity]=useState(1)
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     async function getSingleProduct() {
@@ -99,7 +99,6 @@ const ProductDetail = () => {
     },
   ];
 
-
   const slider = React.useRef(null);
   var settings = {
     infinite: true,
@@ -146,8 +145,7 @@ const ProductDetail = () => {
     });
   }, []);
 
-
-  function addToBasket(e,id) {
+  function addToBasket(e, id) {
     e.preventDefault();
     let basketItem = basket.find((x) => x._id == id);
 
@@ -194,7 +192,11 @@ const ProductDetail = () => {
                     data-placement="top"
                     title="Scroll To Reviews"
                   >
-                    <Rating  readonly={true}  initialValue={product.rating}  size={25}  />
+                    <Rating
+                      readonly={true}
+                      initialValue={product.rating}
+                      size={25}
+                    />
                   </div>
                   <h1 className="prd-block_title">{product.title}</h1>
                 </div>
@@ -331,13 +333,12 @@ const ProductDetail = () => {
                   </div>
                 </div>
                 <div className=" order-md-100">
-                  <form method="post" >
+                  <form method="post">
                     <div className="prd-block_actions prd-block_actions--wishlist">
                       <div className="prd-block_qty">
                         <div className="qty qty-changer">
                           <button
-                          onClick={()=>setQuantity(quantity-1)}
-
+                            onClick={() => setQuantity(quantity - 1)}
                             className="decrease js-qty-button"
                             type="button"
                           ></button>
@@ -351,7 +352,7 @@ const ProductDetail = () => {
                             value={quantity}
                           />
                           <button
-                          onClick={()=>setQuantity(quantity+1)}
+                            onClick={() => setQuantity(quantity + 1)}
                             className="increase js-qty-button"
                             type="button"
                           ></button>
@@ -359,9 +360,8 @@ const ProductDetail = () => {
                       </div>
                       <div className="btn-wrap">
                         <button
-                        onClick={(e)=>addToBasket(e,id)}
+                          onClick={(e) => addToBasket(e, id)}
                           className="btn  "
-     
                         >
                           Add to cart
                         </button>
