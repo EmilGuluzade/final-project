@@ -143,9 +143,8 @@ const BlogDetail = () => {
                               alt=""
                               
                               height={"100px"}
-                              width={"100px"}
 
-                              style={{objectFit:"cover",objectPosition:"top",borderRadius:"50%"}}
+                              style={{objectFit:"cover",objectPosition:"top",borderRadius:"50%",width:"100px"}}
                             />
                           </div>
                         </div>

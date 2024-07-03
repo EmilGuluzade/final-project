@@ -327,7 +327,7 @@ const Checkout = () => {
                   <a href="#" class="prd-img">
                     <img
                       class="fade-up ls-is-cached lazyloaded"
-                      src="images/skins/fashion/products/product-01-1.webp"
+                      src="http://localhost:5173/product/66718befaa067b7b4ba83cd7"
                       data-src="images/skins/fashion/products/product-01-1.webp"
                       alt=""
                     />
@@ -358,7 +358,7 @@ const Checkout = () => {
                   <a href="#" class="prd-img">
                     <img
                       class="fade-up ls-is-cached lazyloaded"
-                      src="images/skins/fashion/products/product-16-1.webp"
+                      src="http://localhost:5173/product/66718a57aa067b7b4ba83cd4"
                       data-src="images/skins/fashion/products/product-16-1.webp"
                       alt=""
                     />

@@ -35,10 +35,8 @@ io.on('connection', (socket) => {
     console.log('Client disconnected');
   });
 
-  // Listen for incoming messages
   socket.on('sendMessage', (message) => {
     console.log('New message:', message);
-    // Broadcast the message to all clients
     io.emit('chatMessage', message);
   });
 });

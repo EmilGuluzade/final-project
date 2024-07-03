@@ -14,7 +14,7 @@ const Footer = () => {
 
   return (
     <footer className="page-footer footer-style-6">
-      {/* <div className="holder">
+      <div className="holder">
         <div className="footer-shop-info">
           <div className="container">
             <div className="text-icn-blocks-bg-row d-flex flex-wrap">
@@ -57,7 +57,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-      </div> */}
+      </div> 
       <div className="footer2">
         <div className="container">
           <div className="foxic-footer">

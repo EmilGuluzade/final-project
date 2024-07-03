@@ -1,11 +1,27 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import "./Header.css";
 import { Link } from "react-router-dom";
+import MainContext from "../../../context/context";
+import { useEffect } from "react";
+import controller from "../../../services/api/requests";
+import { endpoints } from "../../../services/api/constants";
 
 const Header = () => {
+
+  const {user,logout}=useContext(MainContext)
+const [admin,setAdmin]=useState({})
+  useEffect(()=>{
+    async function  getAdmin() {
+  const response= await controller.getOne(endpoints.users,user.id)
+setAdmin({...response.data})
+
+
+}
+getAdmin()
+  },[])
   return (
-    <div className="col-2 adminsidebar">
-      <h2 className="text-light py-4 px-2">Admin Panel</h2>
+    <div className="col-2 adminsidebar  ">
+      <h3 className="text-light py-4 px-3 d-flex align-items-center gap-3 " ><img width={"30px"} height={"30px"} style={{borderRadius:"50%"}} src={admin.src} alt="" /> <span><div>{admin.username}</div> <span>{admin.email}</span></span></h3>
       <div class="accordion accordion-flush  " id="accordionFlushExample">
         <div class="accordion-item  accordionbg">
           <h2 class="accordion-header">
@@ -20,9 +36,8 @@ const Header = () => {
               Products
             </button>
           </h2>
-          <div
+          <div  class="accordion-collapse collapse"
             id="flush-collapseOne"
-            class="accordion-collapse collapse"
             data-bs-parent="#accordionFlushExample"
           >
             <div class="accordion-body adminlinks ">
@@ -109,7 +124,11 @@ const Header = () => {
             </div>
           </div>{" "}
         </div>{" "}
-      </div>{" "}
+      </div>
+
+<div className="logoutadmin"  >
+  <Link className="text-light" onClick={logout}>Logout <i class="fa-solid fa-right-from-bracket mx-2"></i></Link>
+</div>
     </div>
   );
 };

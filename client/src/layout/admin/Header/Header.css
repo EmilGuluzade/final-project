@@ -37,3 +37,10 @@
   text-decoration: none;
   color: white;
 }
+
+
+.logoutadmin{
+  position: absolute;
+  bottom: 30px;
+  left: 20px;
+}
